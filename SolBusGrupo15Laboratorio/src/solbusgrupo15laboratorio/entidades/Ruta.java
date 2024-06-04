@@ -2,18 +2,19 @@
 package solbusgrupo15laboratorio.entidades;
 
 import java.time.Duration;
+import java.time.LocalTime;
 
 public class Ruta {
     private int idRuta;
     private String origen;
     private String destino;
-    private Duration duracion;
+    private LocalTime duracion;
     private boolean estado;
 
     public Ruta() {
     }
 
-    public Ruta(int idRuta, String origen, String destino, Duration duracion, boolean estado) {
+    public Ruta(int idRuta, String origen, String destino, LocalTime duracion, boolean estado) {
         this.idRuta = idRuta;
         this.origen = origen;
         this.destino = destino;
@@ -21,7 +22,7 @@ public class Ruta {
         this.estado = estado;
     }
 
-    public Ruta(String origen, String destino, Duration duracion, boolean estado) {
+    public Ruta(String origen, String destino, LocalTime duracion, boolean estado) {
         this.origen = origen;
         this.destino = destino;
         this.duracion = duracion;
@@ -52,11 +53,11 @@ public class Ruta {
         this.destino = destino;
     }
 
-    public Duration getDuracion() {
+    public LocalTime getDuracion() {
         return duracion;
     }
 
-    public void setDuracion(Duration duracion) {
+    public void setDuracion(LocalTime duracion) {
         this.duracion = duracion;
     }
 

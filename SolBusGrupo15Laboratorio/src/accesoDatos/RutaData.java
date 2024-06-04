@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.sql.Time;
 import java.sql.ResultSet;
 import java.sql.*;
+
 import javax.swing.JOptionPane;
 import solbusgrupo15laboratorio.entidades.Ruta;
 
@@ -36,4 +37,5 @@ public class RutaData {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla ruta" + ex.getMessage());
         }
     }
+
 }

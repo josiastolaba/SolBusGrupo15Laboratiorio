@@ -1,4 +1,3 @@
-
 package accesoDatos;
 
 import java.sql.Connection;
@@ -12,17 +11,18 @@ import javax.swing.JOptionPane;
 import solbusgrupo15laboratorio.entidades.Pasajero;
 
 public class PasajeroData {
+
     private Connection con = null;
 
     public PasajeroData() {
         con = Conexion.getConexion();
     }
-    
-    public void guardarPasajero(Pasajero pasajero){
+
+    public void guardarPasajero(Pasajero pasajero) {
         String sql = "INSERT INTO pasajero( nombre, apellido, dni, correo, telefono, estado) VALUES (?, ?, ?, ?, ?, ?)";
         try {
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            
+
             ps.setString(1, pasajero.getNombre());
             ps.setString(2, pasajero.getApellido());
             ps.setInt(3, pasajero.getDni());
@@ -31,7 +31,7 @@ public class PasajeroData {
             ps.setBoolean(6, pasajero.isEstado());
             ps.executeUpdate();
             ResultSet rs = ps.getGeneratedKeys();
-            
+
             if (rs.next()) {
                 pasajero.setIdPasajero(rs.getInt(1));;
                 JOptionPane.showMessageDialog(null, "Pasajero añadido con exito.");
@@ -42,6 +42,7 @@ public class PasajeroData {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Pasajero" + ex.getMessage());
         }
     }
+
     public List<Pasajero> listarPasajero() {
         List<Pasajero> pasajeros = new ArrayList<>();
         try {
@@ -50,18 +51,18 @@ public class PasajeroData {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Pasajero pasajero = new Pasajero();
-                pasajero.setIdPasajero(rs.getInt("idAlumno"));
-                pasajero.setDni(rs.getInt("dni"));
-                pasajero.setApellido(rs.getString("apellido"));
+                pasajero.setIdPasajero(rs.getInt("idPasajero"));
                 pasajero.setNombre(rs.getString("nombre"));
-                pasajero.setFechaNacimiento(rs.getDate("fechaNacimiento").toLocalDate());
+                pasajero.setApellido(rs.getString("apellido"));
+                pasajero.setDni(rs.getInt("dni"));
+                pasajero.setCorreo(rs.getString("correo"));
+                pasajero.setTelefono(rs.getInt("telefono"));
                 pasajero.setEstado(rs.getBoolean("estado"));
                 pasajeros.add(pasajero);
             }
             ps.close();
-
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, " Error al acceder a la tabla Alumno " + ex.getMessage());
+            JOptionPane.showMessageDialog(null, " Error al acceder a la tabla Pasajeros " + ex.getMessage());
         }
         return pasajeros;
     }

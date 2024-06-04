@@ -101,5 +101,10 @@ public class Pasaje {
     public void setPrecio(double precio) {
         this.precio = precio;
     }
+
+    @Override
+    public String toString() {
+        return "Pasaje{" + "idPasaje=" + idPasaje + ", idPasajero=" + idPasajero + ", idColectivo=" + idColectivo + ", idRuta=" + idRuta + ", fechaViaje=" + fechaViaje + ", horaViaje=" + horaViaje + ", asiento=" + asiento + ", precio=" + precio + '}';
+    }
     
 }

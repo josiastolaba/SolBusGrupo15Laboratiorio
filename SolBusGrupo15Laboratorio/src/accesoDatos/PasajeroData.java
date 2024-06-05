@@ -66,4 +66,61 @@ public class PasajeroData {
         }
         return pasajeros;
     }
+    
+    public Pasajero buscasPasajeroPorNombre(String name){
+        Pasajero pasajero = null;
+        String sql = "SELECT idPasajero, nombre, apellido, dni, correo, telefono, estado FROM pasajero WHERE nombre= ? AND estado = 1";
+        PreparedStatement ps = null;
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setString(1, name);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                pasajero = new Pasajero();
+                pasajero.setIdPasajero(rs.getInt("idAlumno"));
+                pasajero.setDni(rs.getInt("dni"));
+                pasajero.setApellido(rs.getString("apellido"));
+                pasajero.setNombre(rs.getString("nombre"));
+                pasajero.setCorreo(rs.getString("correo"));
+                pasajero.setTelefono(rs.getInt("telefono"));
+                pasajero.setEstado(true);
+
+            } else {
+                JOptionPane.showMessageDialog(null, "No existe el pasajero");
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla pasajero " + ex.getMessage());
+        }
+        return pasajero;
+    }
+    public Pasajero buscasPasajeroPorApellido(String lastname){
+        Pasajero pasajero = null;
+        String sql = "SELECT idPasajero, nombre, apellido, dni, correo, telefono, estado FROM pasajero WHERE apellido = ? AND estado = 1";
+        PreparedStatement ps = null;
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setString(1, lastname);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                pasajero = new Pasajero();
+                pasajero.setIdPasajero(rs.getInt("idAlumno"));
+                pasajero.setDni(rs.getInt("dni"));
+                pasajero.setApellido(rs.getString("apellido"));
+                pasajero.setNombre(rs.getString("nombre"));
+                pasajero.setCorreo(rs.getString("correo"));
+                pasajero.setTelefono(rs.getInt("telefono"));
+                pasajero.setEstado(true);
+
+            } else {
+                JOptionPane.showMessageDialog(null, "No existe el pasajero");
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla pasajero " + ex.getMessage());
+        }
+        return pasajero;
+    }
 }

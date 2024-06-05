@@ -1,4 +1,3 @@
-
 package solbusgrupo15laboratorio;
 
 import accesoDatos.ColectivoData;
@@ -30,23 +29,12 @@ public class SolBusGrupo15Laboratorio {
 //        pasajeros = pasajeroData.listarPasajero();
 //        for (Pasajero aux:pasajeros){ 
 //        System.out.println(aux.toString());
-          Pasaje pas1= new Pasaje(1, 1, 1, 1, LocalDate.of(2024, Month.JUNE, 4), LocalTime.of(12, 05), 3, 750);
-          PasajeData pasData=new PasajeData();
-          pasData.venderPasaje(pas1);
-        
+        Colectivo c1 = new Colectivo(1, "AB123CD", "Ford", "Full", 40, true);
+        ColectivoData cData = new ColectivoData();
+//        cData.guardarColectivo(c1);
+        Pasaje pas1 = new Pasaje(1, 1, 1, 1, LocalDate.of(2024, Month.JUNE, 4), LocalTime.of(12, 05), 3, 750);
+        PasajeData pasData = new PasajeData();
+        pasData.venderPasaje(pas1);
     }
-<<<<<<< Updated upstream
-     
-=======
-    
-        
-        
-     Colectivo c1 = new Colectivo(1, "AB123CD", "Ford", "Full", 40, true);
-     ColectivoData cData = new ColectivoData();
-     cData.guardarColectivo(c1);
-    
-    }
-    
->>>>>>> Stashed changes
+
 }
-    

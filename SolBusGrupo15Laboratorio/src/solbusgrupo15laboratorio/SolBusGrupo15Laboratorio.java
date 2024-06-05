@@ -13,6 +13,7 @@ import solbusgrupo15laboratorio.entidades.Pasajero;
 import solbusgrupo15laboratorio.entidades.Ruta;
 import solbusgrupo15laboratorio.entidades.Pasaje;
 import accesoDatos.PasajeData;
+import java.sql.Time;
 
 public class SolBusGrupo15Laboratorio {
 
@@ -46,14 +47,27 @@ public class SolBusGrupo15Laboratorio {
         Colectivo c1 = new Colectivo(1, "AB123CD", "Ford", "Full", 40, true);
         ColectivoData cData = new ColectivoData();
 //        cData.guardarColectivo(c1);
-        Pasaje pas1 = new Pasaje(1, 1, 1, 1, LocalDate.of(2024, Month.JUNE, 4), LocalTime.of(12, 05), 3, 750);
-        PasajeData pasData = new PasajeData();
-//        pasData.venderPasaje(pas1);  
-        List<Pasaje> pasajeros=new ArrayList<Pasaje>();
-        pasajeros = pasData.historialVentasXRuta(1);
-        for (Pasaje aux : pasajeros) {
-            System.out.println(aux.toString());
-        }
+//        Pasaje pas1 = new Pasaje(1, 1, 1, 1, LocalDate.of(2024, Month.JUNE, 4), LocalTime.of(12, 05), 3, 750);
+          Pasaje pas2 = new Pasaje(6, 1, 1, 1, LocalDate.of(2024, Month.JUNE, 4), LocalTime.of(12, 05), 3, 750);
+          PasajeData pasData = new PasajeData();
+//        pasData.venderPasaje(pas2);  
+//        List<Pasaje> pasajeros=new ArrayList<Pasaje>();
+//        pasajeros = pasData.historialVentasXRuta(1);
+//        for (Pasaje aux : pasajeros) {
+//            System.out.println(aux.toString());
+//        }
+//       List<Pasaje> pasajeros = pasData.historialVentasXHorario(Time.valueOf(LocalTime.of(12, 5)));
+//
+//        for (Pasaje aux : pasajeros) {
+//            System.out.println(aux.toString());
+//        }
+//         List<Pasaje> pasajeros=new ArrayList<Pasaje>();
+//         pasajeros = pasData.historialVentasXPasajero(1);
+//         for (Pasaje aux : pasajeros) {
+//            System.out.println(aux.toString());
+//         }
+        pasData.emitirRecibo(6);
+//          pasData.anularPasaje(5);
     }
 
 }

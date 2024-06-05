@@ -22,7 +22,6 @@ public class PasajeroData {
         String sql = "INSERT INTO pasajero( nombre, apellido, dni, correo, telefono, estado) VALUES (?, ?, ?, ?, ?, ?)";
         try {
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-
             ps.setString(1, pasajero.getNombre());
             ps.setString(2, pasajero.getApellido());
             ps.setInt(3, pasajero.getDni());
@@ -31,13 +30,11 @@ public class PasajeroData {
             ps.setBoolean(6, pasajero.isEstado());
             ps.executeUpdate();
             ResultSet rs = ps.getGeneratedKeys();
-
             if (rs.next()) {
                 pasajero.setIdPasajero(rs.getInt(1));;
                 JOptionPane.showMessageDialog(null, "Pasajero añadido con exito.");
             }
             ps.close();
-
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Pasajero" + ex.getMessage());
         }
@@ -75,7 +72,6 @@ public class PasajeroData {
             ps = con.prepareStatement(sql);
             ps.setString(1, name);
             ResultSet rs = ps.executeQuery();
-
             if (rs.next()) {
                 pasajero = new Pasajero();
                 pasajero.setIdPasajero(rs.getInt("idAlumno"));
@@ -85,7 +81,6 @@ public class PasajeroData {
                 pasajero.setCorreo(rs.getString("correo"));
                 pasajero.setTelefono(rs.getInt("telefono"));
                 pasajero.setEstado(true);
-
             } else {
                 JOptionPane.showMessageDialog(null, "No existe el pasajero");
             }
@@ -103,6 +98,32 @@ public class PasajeroData {
             ps = con.prepareStatement(sql);
             ps.setString(1, lastname);
             ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                pasajero = new Pasajero();
+                pasajero.setIdPasajero(rs.getInt("idAlumno"));
+                pasajero.setDni(rs.getInt("dni"));
+                pasajero.setApellido(rs.getString("apellido"));
+                pasajero.setNombre(rs.getString("nombre"));
+                pasajero.setCorreo(rs.getString("correo"));
+                pasajero.setTelefono(rs.getInt("telefono"));
+                pasajero.setEstado(true);
+            } else {
+                JOptionPane.showMessageDialog(null, "No existe el pasajero");
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla pasajero " + ex.getMessage());
+        }
+        return pasajero;
+    }
+    public Pasajero buscasPasajeroPorDni(int dni){
+        Pasajero pasajero = null;
+        String sql = "SELECT idPasajero, nombre, apellido, dni, correo, telefono, estado FROM pasajero WHERE dni = ? AND estado = 1";
+        PreparedStatement ps = null;
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, dni);
+            ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
                 pasajero = new Pasajero();
@@ -113,7 +134,6 @@ public class PasajeroData {
                 pasajero.setCorreo(rs.getString("correo"));
                 pasajero.setTelefono(rs.getInt("telefono"));
                 pasajero.setEstado(true);
-
             } else {
                 JOptionPane.showMessageDialog(null, "No existe el pasajero");
             }

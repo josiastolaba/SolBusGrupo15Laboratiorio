@@ -66,7 +66,7 @@ public class SolBusGrupo15Laboratorio {
 //         for (Pasaje aux : pasajeros) {
 //            System.out.println(aux.toString());
 //         }
-        pasData.emitirRecibo(6);
+//        pasData.emitirRecibo(6);
 //          pasData.anularPasaje(5);
     }
 

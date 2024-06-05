@@ -40,7 +40,7 @@ public class PasajeroData {
         }
     }
 
-    public List<Pasajero> listarPasajero() {
+    public List<Pasajero> listarPasajeros() {
         List<Pasajero> pasajeros = new ArrayList<>();
         try {
             String sql = "SELECT * FROM pasajero WHERE estado = 1 ";
@@ -59,7 +59,7 @@ public class PasajeroData {
             }
             ps.close();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, " Error al acceder a la tabla Pasajeros " + ex.getMessage());
+            JOptionPane.showMessageDialog(null, " Error al acceder a la tabla Pasajero " + ex.getMessage());
         }
         return pasajeros;
     }
@@ -74,7 +74,7 @@ public class PasajeroData {
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 pasajero = new Pasajero();
-                pasajero.setIdPasajero(rs.getInt("idAlumno"));
+                pasajero.setIdPasajero(rs.getInt("idPasajero"));
                 pasajero.setDni(rs.getInt("dni"));
                 pasajero.setApellido(rs.getString("apellido"));
                 pasajero.setNombre(rs.getString("nombre"));
@@ -100,7 +100,7 @@ public class PasajeroData {
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 pasajero = new Pasajero();
-                pasajero.setIdPasajero(rs.getInt("idAlumno"));
+                pasajero.setIdPasajero(rs.getInt("idPasajero"));
                 pasajero.setDni(rs.getInt("dni"));
                 pasajero.setApellido(rs.getString("apellido"));
                 pasajero.setNombre(rs.getString("nombre"));
@@ -127,7 +127,7 @@ public class PasajeroData {
 
             if (rs.next()) {
                 pasajero = new Pasajero();
-                pasajero.setIdPasajero(rs.getInt("idAlumno"));
+                pasajero.setIdPasajero(rs.getInt("idPasajero"));
                 pasajero.setDni(rs.getInt("dni"));
                 pasajero.setApellido(rs.getString("apellido"));
                 pasajero.setNombre(rs.getString("nombre"));

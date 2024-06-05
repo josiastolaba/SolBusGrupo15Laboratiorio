@@ -104,7 +104,7 @@ public class Pasaje {
 
     @Override
     public String toString() {
-        return "Pasaje{" + "idPasaje=" + idPasaje + ", idPasajero=" + idPasajero + ", idColectivo=" + idColectivo + ", idRuta=" + idRuta + ", fechaViaje=" + fechaViaje + ", horaViaje=" + horaViaje + ", asiento=" + asiento + ", precio=" + precio + '}';
+        return "Pasaje idPasaje = " + idPasaje + ", idPasajero = " + idPasajero + ", idColectivo = " + idColectivo + ", idRuta = " + idRuta + ", fechaViaje = " + fechaViaje + ", horaViaje = " + horaViaje + ", asiento = " + asiento + ", precio = " + precio;
     }
     
 }

@@ -67,5 +67,11 @@ public class Horario {
     public void setEstado(boolean estado) {
         this.estado = estado;
     }
+
+    @Override
+    public String toString() {
+        return "Horario idHorario = " + idHorario + ", idRuta = " + idRuta + ", horaSalida = " + horaSalida + ", horaLlegada = " + horaLlegada + ", estado = " + estado;
+    }
+    
     
 }

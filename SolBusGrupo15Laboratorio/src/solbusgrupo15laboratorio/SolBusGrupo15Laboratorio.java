@@ -17,22 +17,38 @@ import accesoDatos.PasajeData;
 public class SolBusGrupo15Laboratorio {
 
     public static void main(String[] args) {
-//        Ruta r1 = new Ruta(1,"La Punta", "San Luis",LocalTime.of(1, 20) , true);
-//        RutaData rData = new RutaData();
-////      rData.aniadirNuevaRuta(r1); 
+//PRUEBAS RUTA============================================================================================================
+        Ruta r1 = new Ruta(1,"La Punta", "San Luis",LocalTime.of(1, 20) , true);
+        RutaData rData = new RutaData();
+//        rData.aniadirNuevaRuta(r1); 
+//        List<Ruta> rutas = new ArrayList<>();
+//        rutas = rData.listarRutas();
+//        for (Ruta aux:rutas){ 
+//           System.out.println(aux.toString());
+//        }
+//        Ruta prueba = rData.buscasRutaPorOrigen("La Punta");
+//        Ruta prueba = rData.buscasRutaPorDestino("San Luis");
+//        System.out.println(prueba.toString());
+//PRUEBAS PASAJERO========================================================================================================
         Pasajero p1 = new Pasajero(1, "Josias", "Tolaba", 12345678, "josiastolaba@gmail.com", 266412345, true);
-//        PasajeroData pasajeroData = new PasajeroData();
-////      pasajeroData.guardarPasajero(p1);
+        PasajeroData pasajeroData = new PasajeroData();
+//        pasajeroData.guardarPasajero(p1);
 //        List<Pasajero> pasajeros = new ArrayList<>();
-//        pasajeros = pasajeroData.listarPasajero();
+//        pasajeros = pasajeroData.listarPasajeros();
 //        for (Pasajero aux:pasajeros){ 
-//        System.out.println(aux.toString());
+//            System.out.println(aux.toString());
+//        }
+//        Pasajero prueba = pasajeroData.buscasPasajeroPorNombre(p1.getNombre());
+//        Pasajero prueba = pasajeroData.buscasPasajeroPorApellido(p1.getApellido());
+//        Pasajero prueba = pasajeroData.buscasPasajeroPorDni(p1.getDni());
+//        System.out.println(prueba.toString());
+//PRUEBAS COLECTIVO=======================================================================================================
         Colectivo c1 = new Colectivo(1, "AB123CD", "Ford", "Full", 40, true);
         ColectivoData cData = new ColectivoData();
 //        cData.guardarColectivo(c1);
         Pasaje pas1 = new Pasaje(1, 1, 1, 1, LocalDate.of(2024, Month.JUNE, 4), LocalTime.of(12, 05), 3, 750);
         PasajeData pasData = new PasajeData();
-        pasData.venderPasaje(pas1);
+//        pasData.venderPasaje(pas1);  
     }
 
 }

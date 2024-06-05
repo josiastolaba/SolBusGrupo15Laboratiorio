@@ -1,6 +1,7 @@
 
 package solbusgrupo15laboratorio;
 
+import accesoDatos.ColectivoData;
 import accesoDatos.PasajeroData;
 import accesoDatos.RutaData;
 import java.time.LocalDate;
@@ -8,6 +9,7 @@ import java.time.LocalTime;
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
+import solbusgrupo15laboratorio.entidades.Colectivo;
 import solbusgrupo15laboratorio.entidades.Pasajero;
 import solbusgrupo15laboratorio.entidades.Ruta;
 import solbusgrupo15laboratorio.entidades.Pasaje;
@@ -33,5 +35,18 @@ public class SolBusGrupo15Laboratorio {
           pasData.venderPasaje(pas1);
         
     }
+<<<<<<< Updated upstream
      
+=======
+    
+        
+        
+     Colectivo c1 = new Colectivo(1, "AB123CD", "Ford", "Full", 40, true);
+     ColectivoData cData = new ColectivoData();
+     cData.guardarColectivo(c1);
+    
+    }
+    
+>>>>>>> Stashed changes
 }
+    

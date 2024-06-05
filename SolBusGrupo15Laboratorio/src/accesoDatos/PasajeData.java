@@ -8,8 +8,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Time;
+import java.time.Month;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import solbusgrupo15laboratorio.entidades.Pasaje;
+import solbusgrupo15laboratorio.entidades.Ruta;
 
 public class PasajeData {
     private Connection con = null;
@@ -42,5 +46,38 @@ public class PasajeData {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Pasaje" + ex.getMessage());
         }
+    }
+    
+    public List<Pasaje> historialVentasXRuta(int id){
+         List<Pasaje> pasajes = new ArrayList<>();
+        String sql = "SELECT pasaje.idPasaje,idPasajero, idColectivo,pasaje.idRuta, fechaviaje, "
+                + "horaViaje, asiento, precio FROM pasaje,ruta"
+                + " WHERE pasaje.idRuta = ?";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Pasaje pasaje = new Pasaje();
+                pasaje.setIdPasaje(rs.getInt("idPasaje"));
+                pasaje.setIdPasajero(rs.getInt("idPasajero"));
+                pasaje.setIdColectivo(rs.getInt("idColectivo"));
+                pasaje.setIdRuta(rs.getInt("idRuta"));
+                pasaje.setFechaViaje(rs.getDate("fechaviaje").toLocalDate());
+                pasaje.setHoraViaje(rs.getTime("horaViaje").toLocalTime());
+                pasaje.setAsiento(rs.getInt("asiento"));
+                pasaje.setPrecio(rs.getDouble("precio"));
+                
+                pasajes.add(pasaje);
+
+            }
+            ps.close();
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a  la tabla pasaje " + ex.getMessage());
+
+        }
+        return pasajes;
+
     }
 }

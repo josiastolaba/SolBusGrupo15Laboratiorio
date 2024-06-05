@@ -49,6 +49,11 @@ public class SolBusGrupo15Laboratorio {
         Pasaje pas1 = new Pasaje(1, 1, 1, 1, LocalDate.of(2024, Month.JUNE, 4), LocalTime.of(12, 05), 3, 750);
         PasajeData pasData = new PasajeData();
 //        pasData.venderPasaje(pas1);  
+        List<Pasaje> pasajeros=new ArrayList<Pasaje>();
+        pasajeros = pasData.historialVentasXRuta(1);
+        for (Pasaje aux : pasajeros) {
+            System.out.println(aux.toString());
+        }
     }
 
 }

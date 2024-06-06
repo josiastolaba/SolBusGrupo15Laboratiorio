@@ -1,6 +1,7 @@
 package solbusgrupo15laboratorio;
 
 import accesoDatos.ColectivoData;
+import accesoDatos.HorarioData;
 import accesoDatos.PasajeroData;
 import accesoDatos.RutaData;
 import java.time.LocalDate;
@@ -14,6 +15,7 @@ import solbusgrupo15laboratorio.entidades.Ruta;
 import solbusgrupo15laboratorio.entidades.Pasaje;
 import accesoDatos.PasajeData;
 import java.sql.Time;
+import solbusgrupo15laboratorio.entidades.Horario;
 
 public class SolBusGrupo15Laboratorio {
 
@@ -47,27 +49,31 @@ public class SolBusGrupo15Laboratorio {
         Colectivo c1 = new Colectivo(1, "AB123CD", "Ford", "Full", 40, true);
         ColectivoData cData = new ColectivoData();
 //        cData.guardarColectivo(c1);
+//PRUEBAS PASAJE==========================================================================================================
 //        Pasaje pas1 = new Pasaje(1, 1, 1, 1, LocalDate.of(2024, Month.JUNE, 4), LocalTime.of(12, 05), 3, 750);
-          Pasaje pas2 = new Pasaje(6, 1, 1, 1, LocalDate.of(2024, Month.JUNE, 4), LocalTime.of(12, 05), 3, 750);
-          PasajeData pasData = new PasajeData();
+        Pasaje pas2 = new Pasaje(6, 1, 1, 1, LocalDate.of(2024, Month.JUNE, 4), LocalTime.of(12, 05), 3, 750);
+        PasajeData pasData = new PasajeData();
 //        pasData.venderPasaje(pas2);  
-//        List<Pasaje> pasajeros=new ArrayList<Pasaje>();
-//        pasajeros = pasData.historialVentasXRuta(1);
-//        for (Pasaje aux : pasajeros) {
+//        List<Pasaje> pasajes=new ArrayList<Pasaje>();
+//        pasajes = pasData.historialVentasXRuta(1);
+//        for (Pasaje aux : pasajes) {
 //            System.out.println(aux.toString());
 //        }
-//       List<Pasaje> pasajeros = pasData.historialVentasXHorario(Time.valueOf(LocalTime.of(12, 5)));
-//
-//        for (Pasaje aux : pasajeros) {
+//        List<Pasaje> pasajes = pasData.historialVentasXHorario(Time.valueOf(LocalTime.of(12, 5)));
+//        for (Pasaje aux : pasajes) {
 //            System.out.println(aux.toString());
 //        }
-//         List<Pasaje> pasajeros=new ArrayList<Pasaje>();
-//         pasajeros = pasData.historialVentasXPasajero(1);
-//         for (Pasaje aux : pasajeros) {
-//            System.out.println(aux.toString());
-//         }
+//        List<Pasaje> pasajes=new ArrayList<Pasaje>();
+//        pasajes = pasData.historialVentasXPasajero(1);
+//        for (Pasaje aux : pasajes) {
+//           System.out.println(aux.toString());
+//        }
 //        pasData.emitirRecibo(6);
-//          pasData.anularPasaje(5);
+//        pasData.anularPasaje(5);
+//PRUEBAS HORARIO=========================================================================================================
+        Horario h1 = new Horario(1, 1, LocalTime.of(10,00), LocalTime.of(11,00), true);
+        HorarioData horaData = new HorarioData();
+        horaData.guardarHorario(h1);
     }
 
 }

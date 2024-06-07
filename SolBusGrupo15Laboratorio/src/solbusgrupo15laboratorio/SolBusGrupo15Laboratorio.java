@@ -1,6 +1,7 @@
 package solbusgrupo15laboratorio;
 
 import accesoDatos.ColectivoData;
+import accesoDatos.HorarioData;
 import accesoDatos.PasajeroData;
 import accesoDatos.RutaData;
 import java.time.LocalDate;
@@ -14,6 +15,7 @@ import solbusgrupo15laboratorio.entidades.Ruta;
 import solbusgrupo15laboratorio.entidades.Pasaje;
 import accesoDatos.PasajeData;
 import java.sql.Time;
+import solbusgrupo15laboratorio.entidades.Horario;
 
 public class SolBusGrupo15Laboratorio {
 
@@ -61,13 +63,23 @@ public class SolBusGrupo15Laboratorio {
 //        for (Pasaje aux : pasajeros) {
 //            System.out.println(aux.toString());
 //        }
-         List<Pasaje> pasajeros=new ArrayList<Pasaje>();
-         pasajeros = pasData.historialVentasXPasajero(p1);
-         for (Pasaje aux : pasajeros) {
-            System.out.println(aux.toString());
-         }
+//         List<Pasaje> pasajeros=new ArrayList<Pasaje>();
+//         pasajeros = pasData.historialVentasXPasajero(p1);
+//         for (Pasaje aux : pasajeros) {
+//            System.out.println(aux.toString());
+//         }
 //        pasData.emitirRecibo(6);
 //          pasData.anularPasaje(5);
+          Horario h1=new Horario(1, r1, LocalTime.of(6, 00), LocalTime.of(7, 20), true);
+          HorarioData hData=new HorarioData();
+//          hData.aniadirNuevoHorario(h1);
+          List<Horario> horarios=new ArrayList<Horario>();
+//          horarios=hData.buscarHorariosPorRuta(r1);
+          horarios=hData.buscarHorariosPorHDeSalida(LocalTime.of(6,00));
+          for (Horario horario : horarios) {
+              System.out.println(horario);
+            
+        }
     }
 
 }

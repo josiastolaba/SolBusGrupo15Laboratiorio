@@ -8,7 +8,7 @@ public class Horario {
     private Ruta idRuta;
     private LocalTime horaSalida;
     private LocalTime horaLlegada;
-    private boolean estado;
+    private boolean estado ;
 
     public Horario() {
     }

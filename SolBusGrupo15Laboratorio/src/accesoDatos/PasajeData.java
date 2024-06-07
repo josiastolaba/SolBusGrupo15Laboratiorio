@@ -64,7 +64,7 @@ public class PasajeData {
             while (rs.next()) {
                 Pasaje pasaje = new Pasaje();
                 pasaje.setIdPasaje(rs.getInt("idPasaje"));
-                Pasajero pasajero = new Pasajero(); // Suponiendo que tienes un constructor adecuado
+                Pasajero pasajero = new Pasajero(); 
                 pasajero.setIdPasajero(rs.getInt("idPasajero"));
                 pasaje.setIdPasajero(pasajero);
 
@@ -142,7 +142,7 @@ public class PasajeData {
             while (rs.next()) {
                 Pasaje pasaje = new Pasaje();
                 pasaje.setIdPasaje(rs.getInt("idPasaje"));
-                Pasajero pasajero = new Pasajero(); // Suponiendo que tienes un constructor adecuado
+                Pasajero pasajero = new Pasajero(); 
                 pasajero.setIdPasajero(rs.getInt("idPasajero"));
                 pasaje.setIdPasajero(pasajero);
 

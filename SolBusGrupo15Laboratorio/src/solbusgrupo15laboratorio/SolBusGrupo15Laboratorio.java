@@ -49,7 +49,7 @@ public class SolBusGrupo15Laboratorio {
 //        cData.guardarColectivo(c1);
 //        Pasaje pas1 = new Pasaje(1, 1, 1, 1, LocalDate.of(2024, Month.JUNE, 4), LocalTime.of(12, 05), 3, 750);
 //          Pasaje pas2 = new Pasaje(6, 1, 1, 1, LocalDate.of(2024, Month.JUNE, 4), LocalTime.of(12, 05), 3, 750);
-//          PasajeData pasData = new PasajeData();
+          PasajeData pasData = new PasajeData();
 //        pasData.venderPasaje(pas2);  
 //        List<Pasaje> pasajeros=new ArrayList<Pasaje>();
 //        pasajeros = pasData.historialVentasXRuta(1);
@@ -61,11 +61,11 @@ public class SolBusGrupo15Laboratorio {
 //        for (Pasaje aux : pasajeros) {
 //            System.out.println(aux.toString());
 //        }
-//         List<Pasaje> pasajeros=new ArrayList<Pasaje>();
-//         pasajeros = pasData.historialVentasXPasajero(1);
-//         for (Pasaje aux : pasajeros) {
-//            System.out.println(aux.toString());
-//         }
+         List<Pasaje> pasajeros=new ArrayList<Pasaje>();
+         pasajeros = pasData.historialVentasXPasajero(p1);
+         for (Pasaje aux : pasajeros) {
+            System.out.println(aux.toString());
+         }
 //        pasData.emitirRecibo(6);
 //          pasData.anularPasaje(5);
     }

@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Time;
+import java.time.LocalTime;
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
@@ -92,19 +93,18 @@ public class PasajeData {
 
     }
 
-    public List<Pasaje> historialVentasXRuta(Ruta id) {
+    public List<Pasaje> historialVentasXHorario(LocalTime horario) {
         List<Pasaje> pasajes = new ArrayList<>();
-        String sql = "SELECT pasaje.idPasaje,idPasajero, idColectivo,pasaje.idRuta, fechaviaje, "
-                + "horaViaje, asiento, precio FROM pasaje,ruta"
-                + " WHERE pasaje.idRuta = ?";
+        String sql = "SELECT idPasaje, idPasajero, idColectivo, idRuta, fechaviaje, horaViaje, asiento, precio FROM pasaje WHERE horaViaje=?";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, id.getIdRuta());
+            ps.setTime(1, Time.valueOf(horario));
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Pasaje pasaje = new Pasaje();
                 pasaje.setIdPasaje(rs.getInt("idPasaje"));
-                Pasajero pasajero = new Pasajero(); // Suponiendo que tienes un constructor adecuado
+
+                Pasajero pasajero = new Pasajero();
                 pasajero.setIdPasajero(rs.getInt("idPasajero"));
                 pasaje.setIdPasajero(pasajero);
 
@@ -115,74 +115,29 @@ public class PasajeData {
                 Ruta ruta = new Ruta();
                 ruta.setIdRuta(rs.getInt("idRuta"));
                 pasaje.setIdRuta(ruta);
+
                 pasaje.setFechaViaje(rs.getDate("fechaviaje").toLocalDate());
                 pasaje.setHoraViaje(rs.getTime("horaViaje").toLocalTime());
                 pasaje.setAsiento(rs.getInt("asiento"));
                 pasaje.setPrecio(rs.getDouble("precio"));
 
                 pasajes.add(pasaje);
-
             }
             ps.close();
-
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al acceder a  la tabla pasaje " + ex.getMessage());
-
-        }
-
-    
-
-    
-
-    public List<Pasaje> historialVentasXHorario(Time horario){
-        List<Pasaje> pasajes = new ArrayList<>();
-        String sql = "SELECT idPasaje,idPasajero, idColectivo,pasaje.idRuta, fechaviaje, "
-                + "horaViaje, asiento, precio FROM pasaje"
-                + " WHERE horaViaje=?";
-        try {
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setTime(1, horario);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                Pasaje pasaje = new Pasaje();
-                pasaje.setIdPasaje(rs.getInt("idPasaje"));
-                Pasajero pasajero = new Pasajero(); // Suponiendo que tienes un constructor adecuado
-                pasajero.setIdPasajero(rs.getInt("idPasajero"));
-                pasaje.setIdPasajero(pasajero);
-
-                Colectivo colectivo = new Colectivo();
-                colectivo.setIdColectivo(rs.getInt("idColectivo"));
-                pasaje.setIdColectivo(colectivo);
-
-                Ruta ruta = new Ruta();
-                ruta.setIdRuta(rs.getInt("idRuta"));
-                pasaje.setIdRuta(ruta);
-                pasaje.setFechaViaje(rs.getDate("fechaviaje").toLocalDate());
-                pasaje.setHoraViaje(rs.getTime("horaViaje").toLocalTime());
-                pasaje.setAsiento(rs.getInt("asiento"));
-                pasaje.setPrecio(rs.getDouble("precio"));
-
-                pasajes.add(pasaje);
-
-            }
-            ps.close();
-
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al acceder a  la tabla pasaje " + ex.getMessage());
-
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla pasaje " + ex.getMessage());
         }
         return pasajes;
-
     }
 
-    public List<Pasaje> historialVentasXPasajero(int id) {
+    public List<Pasaje> historialVentasXPasajero(Pasajero pas) {
         List<Pasaje> pasajes = new ArrayList<>();
         String sql = "SELECT pasaje.idPasaje,pasaje.idPasajero, idColectivo,idRuta, fechaviaje, "
                 + "horaViaje, asiento, precio FROM pasaje,pasajero"
                 + " WHERE pasaje.idPasajero = ?";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, id);
+            ps.setInt(1, pas.getIdPasajero());
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Pasaje pasaje = new Pasaje();
@@ -261,5 +216,4 @@ public class PasajeData {
             JOptionPane.showMessageDialog(null, "Error al anular el pasaje: " + ex.getMessage());
         }
     }
-}
 }

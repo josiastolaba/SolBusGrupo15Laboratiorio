@@ -1,6 +1,4 @@
-
 package accesoDatos;
-
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,9 +12,8 @@ import solbusgrupo15laboratorio.entidades.Pasajero;
 
 public class ColectivoData {
 
+    private Connection con = null;
 
-
-private Connection con = null; 
     public ColectivoData() {
         con = Conexion.getConexion();
     }
@@ -25,29 +22,27 @@ private Connection con = null;
 
         String sql = "INSERT INTO colectivo(matricula, marca, modelo, capacidad, estado) VALUES (?, ?, ?, ?, ?)";
         try {
-             PreparedStatement ps = con.prepareStatement(sql, java.sql.Statement.RETURN_GENERATED_KEYS); 
-                ps.setString(1, colectivo.getMatricula());
-                ps.setString(2, colectivo.getMarca());
-                ps.setString(3, colectivo.getModelo());
-                
-                ps.setInt(4, colectivo.getCapacidad());
-                
-                ps.setBoolean(5, colectivo.isEstado());
-                ps.executeUpdate();
-                ResultSet rs = ps.getGeneratedKeys();
-                if (rs.next()) {
-                    colectivo.setIdColectivo(rs.getInt(1));
-                    JOptionPane.showMessageDialog(null, "Colectivo añadido con exito.");
-                }
-            }
+            PreparedStatement ps = con.prepareStatement(sql, java.sql.Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, colectivo.getMatricula());
+            ps.setString(2, colectivo.getMarca());
+            ps.setString(3, colectivo.getModelo());
 
-         catch (SQLException ex) {
+            ps.setInt(4, colectivo.getCapacidad());
+
+            ps.setBoolean(5, colectivo.isEstado());
+            ps.executeUpdate();
+            ResultSet rs = ps.getGeneratedKeys();
+            if (rs.next()) {
+                colectivo.setIdColectivo(rs.getInt(1));
+                JOptionPane.showMessageDialog(null, "Colectivo añadido con exito.");
+            }
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Colectivo" + ex.getMessage());
         }
 
     }
-    
-      public List<Colectivo> listarColectivos() {
+
+    public List<Colectivo> listarColectivos() {
         List<Colectivo> colectivos = new ArrayList<>();
         try {
             String sql = "SELECT * FROM colectivo WHERE estado = 1 ";
@@ -69,11 +64,10 @@ private Connection con = null;
         }
         return colectivos;
     }
-    
-      
-        public Colectivo buscasColectivoPorMarca(String name){
+
+    public Colectivo buscasColectivoPorMarca(String name) {
         Colectivo colectivo = null;
-        String sql = "SELECT idColectivo, matricula, marca, modelo, capaciad, estado FROM colectivo WHERE nombre= ? AND estado = 1";
+        String sql = "SELECT idColectivo, matricula, marca, modelo, capacidad, estado FROM colectivo WHERE marca = ? AND estado = 1";
         PreparedStatement ps = null;
         try {
             ps = con.prepareStatement(sql);
@@ -95,14 +89,12 @@ private Connection con = null;
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla colectivo " + ex.getMessage());
         }
         return colectivo;
-      
-}
-    
-        
-        
-           public Colectivo buscasColectivoPorMatricula(String name){
+
+    }
+
+    public Colectivo buscasColectivoPorMatricula(String name) {
         Colectivo colectivo = null;
-        String sql = "SELECT idColectivo, matricula, marca, modelo, capaciad, estado FROM colectivo WHERE nombre= ? AND estado = 1";
+        String sql = "SELECT idColectivo, matricula, marca, modelo, capacidad, estado FROM colectivo WHERE matricula = ? AND estado = 1";
         PreparedStatement ps = null;
         try {
             ps = con.prepareStatement(sql);
@@ -124,13 +116,10 @@ private Connection con = null;
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla colectivo " + ex.getMessage());
         }
         return colectivo;
-        
-        
-        
-}
-    
-           
-           public void eliminarColectivo(int id) {
+
+    }
+
+    public void eliminarColectivo(int id) {
         try {
             String sql = "UPDATE colectivo SET estado = 0 WHERE idColectivo = ? ";
             PreparedStatement ps = con.prepareStatement(sql);
@@ -145,9 +134,5 @@ private Connection con = null;
             JOptionPane.showMessageDialog(null, " Error al acceder a la tabla Colectivo");
         }
     }
-           
-           
-           
-}
-    
 
+}

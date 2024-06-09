@@ -205,6 +205,9 @@
           <StringArray count="0"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JCBColectivoActionPerformed"/>
+      </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;Colectivo&gt;"/>
       </AuxValues>
@@ -247,9 +250,6 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="JTFecha">
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JTFechaActionPerformed"/>
-      </Events>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">
       <AuxValues>
@@ -393,16 +393,10 @@
     <Component class="javax.swing.JTextField" name="JTNombre">
     </Component>
     <Component class="javax.swing.JTextField" name="JTApellido">
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JTApellidoActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="JTCorreo">
     </Component>
     <Component class="javax.swing.JTextField" name="JTTelefono">
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JTTelefonoActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnSalir">
       <Properties>

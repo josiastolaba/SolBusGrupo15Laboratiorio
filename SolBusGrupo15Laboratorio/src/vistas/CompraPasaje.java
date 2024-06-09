@@ -2,31 +2,43 @@
 package vistas;
 
 import accesoDatos.ColectivoData;
+import accesoDatos.HorarioData;
 import accesoDatos.PasajeroData;
 import accesoDatos.RutaData;
+import java.time.LocalDate;
 import java.awt.Color;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import solbusgrupo15laboratorio.entidades.Colectivo;
+import solbusgrupo15laboratorio.entidades.Horario;
 import solbusgrupo15laboratorio.entidades.Pasajero;
 import solbusgrupo15laboratorio.entidades.Ruta;
 
 public class CompraPasaje extends javax.swing.JInternalFrame {
     private PasajeroData pasajeroData = new PasajeroData();
-    private Pasajero pasajero = null;
     private ColectivoData coleData = new ColectivoData();
-    private Colectivo cole = null;
     private RutaData rutData = new RutaData();
+    private HorarioData horaData = new HorarioData();
+    private Colectivo cole = null;
     private Ruta ruta = null;
+    private Pasajero pasajero = null;
+    private Horario horario = null;
     private List<Ruta> rutas;
     private List<Colectivo> colectivos;
+    private List<Horario> horarios;
+    private DefaultTableModel modeloHorario;
+    private DefaultTableModel modeloAsiento;
     
     public CompraPasaje() {
         initComponents();
         colectivos = coleData.listarColectivos();
         rutas = rutData.listarRutas();
+        modeloHorario = (DefaultTableModel) JTHsSalidaYLlegada.getModel();
+        modeloAsiento = (DefaultTableModel) JTAsientos.getModel();
         cargarColectivos();
         cargarRutas();
         cargarFecha();
@@ -75,6 +87,12 @@ public class CompraPasaje extends javax.swing.JInternalFrame {
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jLabel3.setText("Colectivo");
 
+        JCBColectivo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JCBColectivoActionPerformed(evt);
+            }
+        });
+
         jLabel4.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jLabel4.setText("Ruta");
 
@@ -89,12 +107,6 @@ public class CompraPasaje extends javax.swing.JInternalFrame {
 
         jLabel6.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jLabel6.setText("Fecha");
-
-        JTFecha.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JTFechaActionPerformed(evt);
-            }
-        });
 
         JTHsSalidaYLlegada.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -155,18 +167,6 @@ public class CompraPasaje extends javax.swing.JInternalFrame {
 
         jLabel13.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jLabel13.setText("Asientos");
-
-        JTApellido.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JTApellidoActionPerformed(evt);
-            }
-        });
-
-        JTTelefono.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JTTelefonoActionPerformed(evt);
-            }
-        });
 
         btnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/salir.png"))); // NOI18N
         btnSalir.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -303,14 +303,6 @@ public class CompraPasaje extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void JTFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTFechaActionPerformed
-        
-    }//GEN-LAST:event_JTFechaActionPerformed
-
-    private void JTApellidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTApellidoActionPerformed
-        
-    }//GEN-LAST:event_JTApellidoActionPerformed
-
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         try{
             Integer dni = Integer.parseInt(JTDNIPasajero.getText());
@@ -346,14 +338,46 @@ public class CompraPasaje extends javax.swing.JInternalFrame {
         btnSalir.setBackground(new  Color(187,187,187));
     }//GEN-LAST:event_btnSalirMouseExited
 
-    private void JTTelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTTelefonoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_JTTelefonoActionPerformed
-
     private void JCBRutaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JCBRutaActionPerformed
-        // TODO add your handling code here:
+        Ruta rutaSeleccionado = (Ruta)JCBRuta.getSelectedItem();
+        if (rutaSeleccionado != null) {
+            cargarHorarios(rutaSeleccionado);
+        }
     }//GEN-LAST:event_JCBRutaActionPerformed
 
+    private void JCBColectivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JCBColectivoActionPerformed
+        Colectivo colectivoSeleccionado = (Colectivo)JCBColectivo.getSelectedItem();
+        if (colectivoSeleccionado != null) {
+            cargarAsiento(colectivoSeleccionado);
+        }
+    }//GEN-LAST:event_JCBColectivoActionPerformed
+    private void cargarHorarios(Ruta ruta){
+        borrarFilaTabla(modeloHorario);
+        List<Horario> horarios = horaData.buscarHorariosPorRuta(ruta);
+        for (Horario horario : horarios) {
+            modeloHorario.addRow(new Object[]{horario.getHoraSalida(), horario.getHoraLlegada()});
+        }
+    }
+    private void cargarAsiento(Colectivo colectivo){
+        borrarFilaTabla(modeloAsiento);
+        List<Integer> cantAsientos = new ArrayList<>();
+        List<Integer> cantAsientos2 = new ArrayList<>();
+        for (int i = 0;i >= (colectivo.getCapacidad()/2);i++){
+            cantAsientos.add(i);
+        }
+        for (int i = (colectivo.getCapacidad()/2);i >= (colectivo.getCapacidad());i++){
+            cantAsientos2.add(i);
+        }
+        for (Integer asiento : cantAsientos) {
+            modeloAsiento.addRow(new Object[]{asiento.toString(), });
+        }
+        int maxRows = Math.max(cantAsientos.size(), cantAsientos2.size());
+        for (int i = 0; i < maxRows; i++) {
+            String asientoIzquierda = (i < cantAsientos.size()) ? cantAsientos.get(i).toString() : "";
+            String asientoDerecha = (i < cantAsientos2.size()) ? cantAsientos2.get(i).toString() : "";
+            modeloAsiento.addRow(new Object[]{asientoIzquierda, asientoDerecha});
+        }
+    }
     private void cargarColectivos() {
         for (Colectivo item : colectivos) {
             JCBColectivo.addItem(item);
@@ -368,7 +392,14 @@ public class CompraPasaje extends javax.swing.JInternalFrame {
         JTFecha.setText(String.valueOf(LocalDate.now()));
         JTFecha.setEnabled(false);
     }
-
+    private void borrarFilaTabla(DefaultTableModel modelo) {
+        if (modelo != null) {
+            int rowCount = modelo.getRowCount();
+            for (int i = rowCount - 1; i >= 0; i--) {
+                modelo.removeRow(i);
+            }
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<Colectivo> JCBColectivo;
     private javax.swing.JComboBox<Ruta> JCBRuta;

@@ -1,17 +1,31 @@
-
 package vistas;
+
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Toolkit;
+import javax.swing.ImageIcon;
 
 public class Menu extends javax.swing.JFrame {
 
     public Menu() {
         initComponents();
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setSize(screenSize.width, screenSize.height);
+        this.setLocation(0, 0);
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        JDPEscritorio = new javax.swing.JDesktopPane();
+        ImageIcon icono=new ImageIcon(getClass().getResource("/imagenes/sol-min.jpg"));
+        Image image=icono.getImage();
+        JDPEscritorio = new javax.swing.JDesktopPane(){
+            public void paintComponent(Graphics g){
+                g.drawImage(image,0,0,getWidth(),getHeight(),this);
+            }
+        };
         jMenuBar1 = new javax.swing.JMenuBar();
         JMPasaje = new javax.swing.JMenu();
         JMCompraPasaje = new javax.swing.JMenuItem();
@@ -129,6 +143,11 @@ public class Menu extends javax.swing.JFrame {
         compraPasaje.setVisible(true);
         JDPEscritorio.add(compraPasaje);
         JDPEscritorio.moveToFront(compraPasaje);
+        Dimension tamañoEscritorio = JDPEscritorio.getSize();
+        Dimension tamañoFormulario = compraPasaje.getSize();
+        int x = (tamañoEscritorio.width - tamañoFormulario.width) / 2;
+        int y = (tamañoEscritorio.height - tamañoFormulario.height) / 2;
+        compraPasaje.setLocation(x, y);
     }//GEN-LAST:event_JMCompraPasajeActionPerformed
 
     private void JMCargarPasajeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMCargarPasajeroActionPerformed
@@ -138,6 +157,11 @@ public class Menu extends javax.swing.JFrame {
         GPasajero.setVisible(true);
         JDPEscritorio.add(GPasajero);
         JDPEscritorio.moveToFront(GPasajero);
+        Dimension tamañoEscritorio = JDPEscritorio.getSize();
+        Dimension tamañoFormulario = GPasajero.getSize();
+        int x = (tamañoEscritorio.width - tamañoFormulario.width) / 2;
+        int y = (tamañoEscritorio.height - tamañoFormulario.height) / 2;
+        GPasajero.setLocation(x, y);
     }//GEN-LAST:event_JMCargarPasajeroActionPerformed
 
     private void JMCargarColectiovActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMCargarColectiovActionPerformed
@@ -147,6 +171,11 @@ public class Menu extends javax.swing.JFrame {
         GColectivo.setVisible(true);
         JDPEscritorio.add(GColectivo);
         JDPEscritorio.moveToFront(GColectivo);
+        Dimension tamañoEscritorio = JDPEscritorio.getSize();
+        Dimension tamañoFormulario = GColectivo.getSize();
+        int x = (tamañoEscritorio.width - tamañoFormulario.width) / 2;
+        int y = (tamañoEscritorio.height - tamañoFormulario.height) / 2;
+        GColectivo.setLocation(x, y);
     }//GEN-LAST:event_JMCargarColectiovActionPerformed
 
     private void JMCargarHorarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMCargarHorarioActionPerformed
@@ -156,6 +185,11 @@ public class Menu extends javax.swing.JFrame {
         GHorario.setVisible(true);
         JDPEscritorio.add(GHorario);
         JDPEscritorio.moveToFront(GHorario);
+        Dimension tamañoEscritorio = JDPEscritorio.getSize();
+        Dimension tamañoFormulario = GHorario.getSize();
+        int x = (tamañoEscritorio.width - tamañoFormulario.width) / 2;
+        int y = (tamañoEscritorio.height - tamañoFormulario.height) / 2;
+        GHorario.setLocation(x, y);
     }//GEN-LAST:event_JMCargarHorarioActionPerformed
 
     private void JMCargarRutaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMCargarRutaActionPerformed
@@ -165,6 +199,11 @@ public class Menu extends javax.swing.JFrame {
         GRuta.setVisible(true);
         JDPEscritorio.add(GRuta);
         JDPEscritorio.moveToFront(GRuta);
+        Dimension tamañoEscritorio = JDPEscritorio.getSize();
+        Dimension tamañoFormulario = GRuta.getSize();
+        int x = (tamañoEscritorio.width - tamañoFormulario.width) / 2;
+        int y = (tamañoEscritorio.height - tamañoFormulario.height) / 2;
+        GRuta.setLocation(x, y);
     }//GEN-LAST:event_JMCargarRutaActionPerformed
 
     private void jMenu6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu6MouseClicked

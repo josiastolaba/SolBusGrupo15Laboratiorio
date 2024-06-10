@@ -34,7 +34,7 @@ public class PasajeroData {
                 pasajero.setIdPasajero(rs.getInt(1));;
                 JOptionPane.showMessageDialog(null, "Pasajero añadido con exito.");
             }
-            ps.close();
+            
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Pasajero" + ex.getMessage());
         }

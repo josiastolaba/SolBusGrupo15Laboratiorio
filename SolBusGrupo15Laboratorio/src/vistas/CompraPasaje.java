@@ -431,6 +431,7 @@ public class CompraPasaje extends javax.swing.JInternalFrame {
                 String asienselec = String.valueOf(JTAsientos.getValueAt(selectedRow, selectedColumn));
                 Pasaje pasaje = new Pasaje(pas, col, rut, fech, lc, asientoSelec, precio);
                 pasajeData.venderPasaje(pasaje);
+                pasajeData.emitirRecibo(pasaje.getIdPasaje());
                 borrarFilaTabla(modeloHorario);
                 borrarFilaTabla(modeloAsiento); 
             }

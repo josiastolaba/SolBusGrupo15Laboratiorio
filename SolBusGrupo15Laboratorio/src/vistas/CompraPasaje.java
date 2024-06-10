@@ -3,18 +3,22 @@ package vistas;
 
 import accesoDatos.ColectivoData;
 import accesoDatos.HorarioData;
+import accesoDatos.PasajeData;
 import accesoDatos.PasajeroData;
 import accesoDatos.RutaData;
 import java.time.LocalDate;
 import java.awt.Color;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import solbusgrupo15laboratorio.entidades.Colectivo;
 import solbusgrupo15laboratorio.entidades.Horario;
+import solbusgrupo15laboratorio.entidades.Pasaje;
 import solbusgrupo15laboratorio.entidades.Pasajero;
 import solbusgrupo15laboratorio.entidades.Ruta;
 
@@ -23,6 +27,7 @@ public class CompraPasaje extends javax.swing.JInternalFrame {
     private ColectivoData coleData = new ColectivoData();
     private RutaData rutData = new RutaData();
     private HorarioData horaData = new HorarioData();
+    private PasajeData pasajeData = new PasajeData();
     private Colectivo cole = null;
     private Ruta ruta = null;
     private Pasajero pasajero = null;
@@ -32,6 +37,8 @@ public class CompraPasaje extends javax.swing.JInternalFrame {
     private List<Horario> horarios;
     private DefaultTableModel modeloHorario;
     private DefaultTableModel modeloAsiento;
+//    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+//    DateTimeFormatter formattertime = DateTimeFormatter.ofPattern("HH:mm");
     
     public CompraPasaje() {
         initComponents();
@@ -75,7 +82,7 @@ public class CompraPasaje extends javax.swing.JInternalFrame {
         JTCorreo = new javax.swing.JTextField();
         JTTelefono = new javax.swing.JTextField();
         btnSalir = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        JBComprar = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(998, 450));
 
@@ -87,6 +94,12 @@ public class CompraPasaje extends javax.swing.JInternalFrame {
 
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jLabel3.setText("Colectivo");
+
+        JCBColectivo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JCBColectivoActionPerformed(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jLabel4.setText("Ruta");
@@ -123,7 +136,7 @@ public class CompraPasaje extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(JTHsSalidaYLlegada);
 
         jLabel7.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        jLabel7.setText("Precio");
+        jLabel7.setText("Precio $");
 
         JTAsientos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -197,10 +210,10 @@ public class CompraPasaje extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton1.setText("COMPRAR");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        JBComprar.setText("COMPRAR");
+        JBComprar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                JBComprarActionPerformed(evt);
             }
         });
 
@@ -217,10 +230,10 @@ public class CompraPasaje extends javax.swing.JInternalFrame {
                                 .addGap(404, 404, 404)
                                 .addComponent(jLabel1))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton1)
+                                .addComponent(JBComprar)
                                 .addGap(342, 342, 342)
                                 .addComponent(btnSalir)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel11)
@@ -231,42 +244,54 @@ public class CompraPasaje extends javax.swing.JInternalFrame {
                             .addComponent(jLabel10))
                         .addGap(27, 27, 27)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(JTNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(JTDNIPasajero, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(btnBuscar))
-                                    .addComponent(JTTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(JTCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(jLabel4))
-                                        .addGap(18, 18, 18)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(JCBColectivo, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(JCBRuta, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(JTNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(JTDNIPasajero, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnBuscar))
+                                .addComponent(JTTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(JTCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(JTApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(56, 56, 56)
+                        .addGap(24, 24, 24)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel7)
-                                    .addComponent(jLabel6))
-                                .addGap(18, 18, 18)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGap(33, 33, 33)
+                                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGap(90, 90, 90)
+                                                .addComponent(jLabel4))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGap(82, 82, 82)
+                                                .addComponent(jLabel3)))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(JCBColectivo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGap(2, 2, 2)))
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(JTFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(JTPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(82, Short.MAX_VALUE))))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(41, 41, 41))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addContainerGap())
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jLabel6)
+                                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                            .addComponent(JTFecha, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE)
+                                            .addComponent(JTPrecio))
+                                        .addGap(32, 32, 32))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(JCBRuta, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -281,27 +306,31 @@ public class CompraPasaje extends javax.swing.JInternalFrame {
                                 .addComponent(JTDNIPasajero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(JCBColectivo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabel6)
                                 .addComponent(JTFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
-                            .addComponent(JCBRuta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel7)
                             .addComponent(JTPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(35, 35, 35)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel13))
+                        .addGap(7, 7, 7)
+                        .addComponent(JCBRuta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel5))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(62, 62, 62)
-                        .addComponent(btnBuscar)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(JCBColectivo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnBuscar))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(JTNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -321,7 +350,7 @@ public class CompraPasaje extends javax.swing.JInternalFrame {
                 .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnSalir)
-                    .addComponent(jButton1))
+                    .addComponent(JBComprar))
                 .addGap(67, 67, 67))
         );
 
@@ -371,7 +400,7 @@ public class CompraPasaje extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_JCBRutaActionPerformed
 
     private void JTTelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTTelefonoActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_JTTelefonoActionPerformed
 
     private void JTApellidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTApellidoActionPerformed
@@ -382,9 +411,38 @@ public class CompraPasaje extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_JTFechaActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void JBComprarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBComprarActionPerformed
+        int horaSelec = JTHsSalidaYLlegada.getSelectedRow();
+        int asientoSelec = JTAsientos.getSelectedRow();
+        if(horaSelec!=-1){
+            if(asientoSelec!=-1){
+                int dni = Integer.parseInt(JTDNIPasajero.getText());
+                Pasajero pas = pasajeroData.buscasPasajeroPorDni(dni);
+                Colectivo col = (Colectivo)JCBColectivo.getSelectedItem();
+                Ruta rut = (Ruta)JCBRuta.getSelectedItem();
+                double precio = Double.parseDouble(JTPrecio.getText());
+                LocalDate fech = LocalDate.parse(JTFecha.getText());
+                int selectedRow = JTHsSalidaYLlegada.getSelectedRow();
+                int selectedColumn = JTHsSalidaYLlegada.getSelectedColumn();
+                String horariselec = String.valueOf(JTHsSalidaYLlegada.getValueAt(selectedRow, selectedColumn));
+                LocalTime lc = LocalTime.parse(horariselec);
+                selectedRow =JTAsientos.getSelectedRow();
+                selectedColumn =JTAsientos.getSelectedColumn();
+                String asienselec = String.valueOf(JTAsientos.getValueAt(selectedRow, selectedColumn));
+                Pasaje pasaje = new Pasaje(pas, col, rut, fech, lc, asientoSelec, precio);
+                pasajeData.venderPasaje(pasaje);
+                borrarFilaTabla(modeloHorario);
+                borrarFilaTabla(modeloAsiento); 
+            }
+        }
+    }//GEN-LAST:event_JBComprarActionPerformed
+
+    private void JCBColectivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JCBColectivoActionPerformed
+        Colectivo colectivoSeleccionado = (Colectivo)JCBColectivo.getSelectedItem();
+        if (colectivoSeleccionado != null) {
+            cargarAsiento(colectivoSeleccionado);
+        }
+    }//GEN-LAST:event_JCBColectivoActionPerformed
     private void cargarHorarios(Ruta ruta){
         borrarFilaTabla(modeloHorario);
         List<Horario> horarios = horaData.buscarHorariosPorRuta(ruta);
@@ -392,26 +450,23 @@ public class CompraPasaje extends javax.swing.JInternalFrame {
             modeloHorario.addRow(new Object[]{horario.getHoraSalida(), horario.getHoraLlegada()});
         }
     }
-    private void cargarAsiento(Colectivo colectivo){
-        borrarFilaTabla(modeloAsiento);
-        List<Integer> cantAsientos = new ArrayList<>();
-        List<Integer> cantAsientos2 = new ArrayList<>();
-        for (int i = 0;i >= (colectivo.getCapacidad()/2);i++){
-            cantAsientos.add(i);
-        }
-        for (int i = (colectivo.getCapacidad()/2);i >= (colectivo.getCapacidad());i++){
-            cantAsientos2.add(i);
-        }
-        for (Integer asiento : cantAsientos) {
-            modeloAsiento.addRow(new Object[]{asiento.toString(), });
-        }
-        int maxRows = Math.max(cantAsientos.size(), cantAsientos2.size());
-        for (int i = 0; i < maxRows; i++) {
-            String asientoIzquierda = (i < cantAsientos.size()) ? cantAsientos.get(i).toString() : "";
-            String asientoDerecha = (i < cantAsientos2.size()) ? cantAsientos2.get(i).toString() : "";
-            modeloAsiento.addRow(new Object[]{asientoIzquierda, asientoDerecha});
-        }
+   private void cargarAsiento(Colectivo colectivo){
+    borrarFilaTabla(modeloAsiento);
+    List<Integer> asientos = new ArrayList<>();
+    
+    for (int i = 1; i < colectivo.getCapacidad()+1; i++){
+        asientos.add(i);
     }
+
+    int capacidad = colectivo.getCapacidad();
+    int mitad = capacidad / 2;
+
+    for (int i = 0; i < mitad; i++){
+        String asientoIzquierda = asientos.get(i).toString();
+        String asientoDerecha = (i + mitad < capacidad) ? asientos.get(i + mitad).toString() : "";
+        modeloAsiento.addRow(new Object[]{asientoIzquierda, asientoDerecha});
+    }
+}
     private void cargarColectivos() {
         for (Colectivo item : colectivos) {
             JCBColectivo.addItem(item);
@@ -435,6 +490,7 @@ public class CompraPasaje extends javax.swing.JInternalFrame {
         }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton JBComprar;
     private javax.swing.JComboBox<Colectivo> JCBColectivo;
     private javax.swing.JComboBox<Ruta> JCBRuta;
     private javax.swing.JTextField JTApellido;
@@ -448,7 +504,6 @@ public class CompraPasaje extends javax.swing.JInternalFrame {
     private javax.swing.JTextField JTTelefono;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnSalir;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

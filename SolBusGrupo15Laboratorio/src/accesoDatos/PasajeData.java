@@ -31,9 +31,9 @@ public class PasajeData {
         try {
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
-            ps.setObject(1, pasaje.getIdPasajero());
-            ps.setObject(2, pasaje.getIdColectivo());
-            ps.setObject(3, pasaje.getIdRuta());
+            ps.setInt(1, pasaje.getIdPasajero().getIdPasajero());
+            ps.setInt(2, pasaje.getIdColectivo().getIdColectivo());
+            ps.setInt(3, pasaje.getIdRuta().getIdRuta());
             ps.setDate(4, Date.valueOf(pasaje.getFechaViaje()));
             ps.setTime(5, Time.valueOf(pasaje.getHoraViaje()));
             ps.setInt(6, pasaje.getAsiento());

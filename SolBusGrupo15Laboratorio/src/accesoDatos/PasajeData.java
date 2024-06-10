@@ -177,7 +177,6 @@ public class PasajeData {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, idPasaje);
             ResultSet rs = ps.executeQuery();
-
             if (rs.next()) {
                 String recibo = "Detalle del pasaje:\n";  // Asegúrate de iniciar aquí tu string para el recibo
                 recibo += "ID Pasaje: " + rs.getInt("idPasaje") + "\n";
@@ -186,6 +185,7 @@ public class PasajeData {
                 recibo += "ID Ruta: " + rs.getInt("idRuta") + "\n";
                 recibo += "Fecha de Viaje: " + rs.getDate("fechaViaje").toString() + "\n";
                 recibo += "Hora de Viaje: " + rs.getTime("horaViaje").toString() + "\n";
+                recibo += "Hora de Llegada: " + rs.getTime("horaLlegada").toString() + "\n";
                 recibo += "Asiento: " + rs.getInt("asiento") + "\n";
                 recibo += "Precio: " + rs.getDouble("precio");
                 JOptionPane.showMessageDialog(null, recibo);

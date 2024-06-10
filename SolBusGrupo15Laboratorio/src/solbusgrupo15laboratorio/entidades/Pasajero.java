@@ -5,15 +5,15 @@ public class Pasajero {
     private int idPasajero;
     private String nombre;
     private String apellido;
-    private int dni;
+    private String dni;
     private String correo;
-    private int telefono;
+    private String telefono;
     private boolean estado;
 
     public Pasajero() {
     }
 
-    public Pasajero(int idPasajero, String nombre, String apellido, int dni, String correo, int telefono, boolean estado) {
+    public Pasajero(int idPasajero, String nombre, String apellido, String dni, String correo, String telefono, boolean estado) {
         this.idPasajero = idPasajero;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -23,7 +23,7 @@ public class Pasajero {
         this.estado = estado;
     }
 
-    public Pasajero(String nombre, String apellido, int dni, String correo, int telefono, boolean estado) {
+    public Pasajero(String nombre, String apellido, String dni, String correo, String telefono, boolean estado) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.dni = dni;
@@ -56,11 +56,11 @@ public class Pasajero {
         this.apellido = apellido;
     }
 
-    public int getDni() {
+    public String getDni() {
         return dni;
     }
 
-    public void setDni(int dni) {
+    public void setDni(String dni) {
         this.dni = dni;
     }
 
@@ -72,11 +72,11 @@ public class Pasajero {
         this.correo = correo;
     }
 
-    public int getTelefono() {
+    public String getTelefono() {
         return telefono;
     }
 
-    public void setTelefono(int telefono) {
+    public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
 

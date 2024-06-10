@@ -33,7 +33,7 @@ public class SolBusGrupo15Laboratorio {
 //        Ruta prueba = rData.buscasRutaPorDestino("San Luis");
 //        System.out.println(prueba.toString());
 //PRUEBAS PASAJERO========================================================================================================
-        Pasajero p1 = new Pasajero(1, "Josias", "Tolaba", 12345678, "josiastolaba@gmail.com", 266412345, true);
+//        Pasajero p1 = new Pasajero(1, "Josias", "Tolaba", 12345678, "josiastolaba@gmail.com", 266412345, true);
         PasajeroData pasajeroData = new PasajeroData();
 //        pasajeroData.guardarPasajero(p1);
 //        List<Pasajero> pasajeros = new ArrayList<>();
@@ -60,9 +60,9 @@ public class SolBusGrupo15Laboratorio {
         
 //PRUEBAS PASAJE==========================================================================================================
 //        Pasaje pas1 = new Pasaje(1, 1, 1, 1, LocalDate.of(2024, Month.JUNE, 4), LocalTime.of(12, 05), 3, 750);
-        Pasaje pas2 = new Pasaje(2, p1, c1, r1, LocalDate.of(2024, Month.JUNE, 4), LocalTime.of(12, 05), 3, 750);
+//        Pasaje pas2 = new Pasaje(2, p1, c1, r1, LocalDate.of(2024, Month.JUNE, 4), LocalTime.of(12, 05), 3, 750);
         PasajeData pasData = new PasajeData();
-        pasData.venderPasaje(pas2);  
+//        pasData.venderPasaje(pas2);  
 //        List<Pasaje> pasajeros=new ArrayList<Pasaje>();
 //        pasajeros = pasData.historialVentasXRuta(1);
 //        for (Pasaje aux : pasajeros) {

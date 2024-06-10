@@ -24,9 +24,9 @@ public class PasajeroData {
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, pasajero.getNombre());
             ps.setString(2, pasajero.getApellido());
-            ps.setInt(3, pasajero.getDni());
+            ps.setString(3, pasajero.getDni());
             ps.setString(4, pasajero.getCorreo());
-            ps.setInt(5, pasajero.getTelefono());
+            ps.setString(5, pasajero.getTelefono());
             ps.setBoolean(6, pasajero.isEstado());
             ps.executeUpdate();
             ResultSet rs = ps.getGeneratedKeys();
@@ -51,9 +51,9 @@ public class PasajeroData {
                 pasajero.setIdPasajero(rs.getInt("idPasajero"));
                 pasajero.setNombre(rs.getString("nombre"));
                 pasajero.setApellido(rs.getString("apellido"));
-                pasajero.setDni(rs.getInt("dni"));
+                pasajero.setDni(rs.getString("dni"));
                 pasajero.setCorreo(rs.getString("correo"));
-                pasajero.setTelefono(rs.getInt("telefono"));
+                pasajero.setTelefono(rs.getString("telefono"));
                 pasajero.setEstado(rs.getBoolean("estado"));
                 pasajeros.add(pasajero);
             }
@@ -75,11 +75,11 @@ public class PasajeroData {
             if (rs.next()) {
                 pasajero = new Pasajero();
                 pasajero.setIdPasajero(rs.getInt("idPasajero"));
-                pasajero.setDni(rs.getInt("dni"));
+                pasajero.setDni(rs.getString("dni"));
                 pasajero.setApellido(rs.getString("apellido"));
                 pasajero.setNombre(rs.getString("nombre"));
                 pasajero.setCorreo(rs.getString("correo"));
-                pasajero.setTelefono(rs.getInt("telefono"));
+                pasajero.setTelefono(rs.getString("telefono"));
                 pasajero.setEstado(true);
             } else {
                 JOptionPane.showMessageDialog(null, "No existe el pasajero");
@@ -101,11 +101,11 @@ public class PasajeroData {
             if (rs.next()) {
                 pasajero = new Pasajero();
                 pasajero.setIdPasajero(rs.getInt("idPasajero"));
-                pasajero.setDni(rs.getInt("dni"));
+                pasajero.setDni(rs.getString("dni"));
                 pasajero.setApellido(rs.getString("apellido"));
                 pasajero.setNombre(rs.getString("nombre"));
                 pasajero.setCorreo(rs.getString("correo"));
-                pasajero.setTelefono(rs.getInt("telefono"));
+                pasajero.setTelefono(rs.getString("telefono"));
                 pasajero.setEstado(true);
             } else {
                 JOptionPane.showMessageDialog(null, "No existe el pasajero");
@@ -128,11 +128,11 @@ public class PasajeroData {
             if (rs.next()) {
                 pasajero = new Pasajero();
                 pasajero.setIdPasajero(rs.getInt("idPasajero"));
-                pasajero.setDni(rs.getInt("dni"));
+                pasajero.setDni(rs.getString("dni"));
                 pasajero.setApellido(rs.getString("apellido"));
                 pasajero.setNombre(rs.getString("nombre"));
                 pasajero.setCorreo(rs.getString("correo"));
-                pasajero.setTelefono(rs.getInt("telefono"));
+                pasajero.setTelefono(rs.getString("telefono"));
                 pasajero.setEstado(true);
             } else {
                 JOptionPane.showMessageDialog(null, "No existe el pasajero");
@@ -142,5 +142,28 @@ public class PasajeroData {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla pasajero " + ex.getMessage());
         }
         return pasajero;
+    }
+    public void modificarPasajero(Pasajero pasajero) {
+        String sql = "UPDATE pasajero SET dni = ? , nombre = ?, apellido = ?, email = ?, telefono=? WHERE idPasajero = ?";
+        PreparedStatement ps = null;
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setString(1, pasajero.getDni());
+            
+            ps.setString(2, pasajero.getNombre());
+            ps.setString(3, pasajero.getApellido());
+            ps.setString(4, pasajero.getCorreo());
+            ps.setString(5, pasajero.getTelefono());
+            int exito = ps.executeUpdate();
+
+            if (exito == 1) {
+                JOptionPane.showMessageDialog(null, "Modificado Exitosamente.");
+            } else {
+                JOptionPane.showMessageDialog(null, "El alumno no existe");
+            }
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Alumno " + ex.getMessage());
+        }
     }
 }

@@ -98,4 +98,22 @@ public class HorarioData {
         return horarios;
     }
     
+    public void modificarHorario(Horario horario) {
+        String sql = "UPDATE horario SET idRuta = ? , horaSalida = ?, horaLlegada = ?,estado = ? WHERE estado = 1";
+        PreparedStatement ps = null;
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, horario.getIdRuta().getIdRuta());
+            ps.setTime(2, Time.valueOf(horario.getHoraSalida()));
+            ps.setTime(2, Time.valueOf(horario.getHoraLlegada()));
+            int exito = ps.executeUpdate();
+            if (exito == 1) {
+                JOptionPane.showMessageDialog(null, "Modificado Exitosamente.");
+            } else {
+                JOptionPane.showMessageDialog(null, "El horario no existe");
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Horario " + ex.getMessage());
+        }
+    }
 }

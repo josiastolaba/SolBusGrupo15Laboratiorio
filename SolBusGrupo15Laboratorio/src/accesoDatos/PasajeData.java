@@ -185,7 +185,6 @@ public class PasajeData {
                 recibo += "ID Ruta: " + rs.getInt("idRuta") + "\n";
                 recibo += "Fecha de Viaje: " + rs.getDate("fechaViaje").toString() + "\n";
                 recibo += "Hora de Viaje: " + rs.getTime("horaViaje").toString() + "\n";
-                recibo += "Hora de Llegada: " + rs.getTime("horaLlegada").toString() + "\n";
                 recibo += "Asiento: " + rs.getInt("asiento") + "\n";
                 recibo += "Precio: " + rs.getDouble("precio");
                 JOptionPane.showMessageDialog(null, recibo);

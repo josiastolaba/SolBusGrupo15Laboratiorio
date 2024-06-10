@@ -1,4 +1,3 @@
-
 package vistas;
 
 import accesoDatos.ColectivoData;
@@ -11,6 +10,7 @@ import java.awt.Color;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Date;
@@ -23,6 +23,7 @@ import solbusgrupo15laboratorio.entidades.Pasajero;
 import solbusgrupo15laboratorio.entidades.Ruta;
 
 public class CompraPasaje extends javax.swing.JInternalFrame {
+
     private PasajeroData pasajeroData = new PasajeroData();
     private ColectivoData coleData = new ColectivoData();
     private RutaData rutData = new RutaData();
@@ -39,7 +40,7 @@ public class CompraPasaje extends javax.swing.JInternalFrame {
     private DefaultTableModel modeloAsiento;
 //    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
 //    DateTimeFormatter formattertime = DateTimeFormatter.ofPattern("HH:mm");
-    
+
     public CompraPasaje() {
         initComponents();
         colectivos = coleData.listarColectivos();
@@ -358,16 +359,16 @@ public class CompraPasaje extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        try{
+        try {
             Integer dni = Integer.parseInt(JTDNIPasajero.getText());
             pasajero = pasajeroData.buscasPasajeroPorDni(dni);
-            if(pasajero != null){
+            if (pasajero != null) {
                 JTNombre.setText(pasajero.getNombre());
                 JTApellido.setText(pasajero.getApellido());
                 JTCorreo.setText(pasajero.getCorreo());
                 JTTelefono.setText(String.valueOf(pasajero.getTelefono()));
             }
-        }catch(NumberFormatException ex){
+        } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "Debe ingresar un número válido");
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
@@ -377,7 +378,7 @@ public class CompraPasaje extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnBuscarMouseEntered
 
     private void btnBuscarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseExited
-        btnBuscar.setBackground(new Color(187,187,187));
+        btnBuscar.setBackground(new Color(187, 187, 187));
     }//GEN-LAST:event_btnBuscarMouseExited
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
@@ -385,22 +386,22 @@ public class CompraPasaje extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnSalirMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalirMouseEntered
-        btnSalir.setBackground(new Color(128,191,255));
+        btnSalir.setBackground(new Color(128, 191, 255));
     }//GEN-LAST:event_btnSalirMouseEntered
 
     private void btnSalirMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalirMouseExited
-        btnSalir.setBackground(new  Color(187,187,187));
+        btnSalir.setBackground(new Color(187, 187, 187));
     }//GEN-LAST:event_btnSalirMouseExited
 
     private void JCBRutaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JCBRutaActionPerformed
-        Ruta rutaSeleccionado = (Ruta)JCBRuta.getSelectedItem();
+        Ruta rutaSeleccionado = (Ruta) JCBRuta.getSelectedItem();
         if (rutaSeleccionado != null) {
             cargarHorarios(rutaSeleccionado);
         }
     }//GEN-LAST:event_JCBRutaActionPerformed
 
     private void JTTelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTTelefonoActionPerformed
-        
+
     }//GEN-LAST:event_JTTelefonoActionPerformed
 
     private void JTApellidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTApellidoActionPerformed
@@ -414,74 +415,128 @@ public class CompraPasaje extends javax.swing.JInternalFrame {
     private void JBComprarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBComprarActionPerformed
         int horaSelec = JTHsSalidaYLlegada.getSelectedRow();
         int asientoSelec = JTAsientos.getSelectedRow();
-        if(horaSelec!=-1){
-            if(asientoSelec!=-1){
-                int dni = Integer.parseInt(JTDNIPasajero.getText());
-                Pasajero pas = pasajeroData.buscasPasajeroPorDni(dni);
-                Colectivo col = (Colectivo)JCBColectivo.getSelectedItem();
-                Ruta rut = (Ruta)JCBRuta.getSelectedItem();
-                double precio = Double.parseDouble(JTPrecio.getText());
-                LocalDate fech = LocalDate.parse(JTFecha.getText());
-                int selectedRow = JTHsSalidaYLlegada.getSelectedRow();
-                int selectedColumn = JTHsSalidaYLlegada.getSelectedColumn();
-                String horariselec = String.valueOf(JTHsSalidaYLlegada.getValueAt(selectedRow, selectedColumn));
-                LocalTime lc = LocalTime.parse(horariselec);
-                selectedRow =JTAsientos.getSelectedRow();
-                selectedColumn =JTAsientos.getSelectedColumn();
-                String asienselec = String.valueOf(JTAsientos.getValueAt(selectedRow, selectedColumn));
-                Pasaje pasaje = new Pasaje(pas, col, rut, fech, lc, asientoSelec, precio);
-                pasajeData.venderPasaje(pasaje);
-                pasajeData.emitirRecibo(pasaje.getIdPasaje());
-                borrarFilaTabla(modeloHorario);
-                borrarFilaTabla(modeloAsiento); 
-            }
+
+        if (horaSelec == -1) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar una hora de salida.");
+            return;
         }
+
+        if (asientoSelec == -1) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un asiento.");
+            return;
+        }
+
+        try {
+            int dni = Integer.parseInt(JTDNIPasajero.getText());
+            Pasajero pas = pasajeroData.buscasPasajeroPorDni(dni);
+            if (pas == null) {
+                JOptionPane.showMessageDialog(this, "Pasajero no encontrado.");
+                return;
+            }
+            Colectivo col = (Colectivo) JCBColectivo.getSelectedItem();
+            Ruta rut = (Ruta) JCBRuta.getSelectedItem();
+
+            // Validar que el precio es un entero
+            String precioStr = JTPrecio.getText();
+            int precio;
+            try {
+                precio = Integer.parseInt(precioStr);
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "El precio debe ser un número entero.");
+                return;
+            }
+
+            LocalDate fech;
+            try {
+                fech = LocalDate.parse(JTFecha.getText());
+            } catch (DateTimeParseException e) {
+                JOptionPane.showMessageDialog(this, "La fecha no tiene un formato válido.");
+                return;
+            }
+
+            int selectedRow = JTHsSalidaYLlegada.getSelectedRow();
+            int selectedColumn = JTHsSalidaYLlegada.getSelectedColumn();
+            String horariselec = String.valueOf(JTHsSalidaYLlegada.getValueAt(selectedRow, selectedColumn));
+
+            LocalTime lc;
+            try {
+                lc = LocalTime.parse(horariselec);
+            } catch (DateTimeParseException e) {
+                JOptionPane.showMessageDialog(this, "La hora seleccionada no tiene un formato válido.");
+                return;
+            }
+
+            selectedRow = JTAsientos.getSelectedRow();
+            selectedColumn = JTAsientos.getSelectedColumn();
+            String asienselec = String.valueOf(JTAsientos.getValueAt(selectedRow, selectedColumn));
+            if (asienselec == null || asienselec.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Debe seleccionar un asiento válido.");
+                return;
+            }
+
+            Pasaje pasaje = new Pasaje(pas, col, rut, fech, lc, Integer.parseInt(asienselec), precio);
+            pasajeData.venderPasaje(pasaje);
+            pasajeData.emitirRecibo(pasaje.getIdPasaje());
+
+            borrarFilaTabla(modeloHorario);
+            borrarFilaTabla(modeloAsiento);
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "El DNI debe ser un número.");
+        }
+
+        limpiar();
     }//GEN-LAST:event_JBComprarActionPerformed
 
     private void JCBColectivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JCBColectivoActionPerformed
-        Colectivo colectivoSeleccionado = (Colectivo)JCBColectivo.getSelectedItem();
+        Colectivo colectivoSeleccionado = (Colectivo) JCBColectivo.getSelectedItem();
         if (colectivoSeleccionado != null) {
             cargarAsiento(colectivoSeleccionado);
         }
     }//GEN-LAST:event_JCBColectivoActionPerformed
-    private void cargarHorarios(Ruta ruta){
+    private void cargarHorarios(Ruta ruta) {
         borrarFilaTabla(modeloHorario);
         List<Horario> horarios = horaData.buscarHorariosPorRuta(ruta);
         for (Horario horario : horarios) {
             modeloHorario.addRow(new Object[]{horario.getHoraSalida(), horario.getHoraLlegada()});
         }
     }
-   private void cargarAsiento(Colectivo colectivo){
-    borrarFilaTabla(modeloAsiento);
-    List<Integer> asientos = new ArrayList<>();
-    
-    for (int i = 1; i < colectivo.getCapacidad()+1; i++){
-        asientos.add(i);
+
+    private void cargarAsiento(Colectivo colectivo) {
+        borrarFilaTabla(modeloAsiento);
+        List<Integer> asientos = new ArrayList<>();
+
+        for (int i = 1; i < colectivo.getCapacidad() + 1; i++) {
+            asientos.add(i);
+        }
+
+        int capacidad = colectivo.getCapacidad();
+        int mitad = capacidad / 2;
+
+        for (int i = 0; i < mitad; i++) {
+            String asientoIzquierda = asientos.get(i).toString();
+            String asientoDerecha = (i + mitad < capacidad) ? asientos.get(i + mitad).toString() : "";
+            modeloAsiento.addRow(new Object[]{asientoIzquierda, asientoDerecha});
+        }
     }
 
-    int capacidad = colectivo.getCapacidad();
-    int mitad = capacidad / 2;
-
-    for (int i = 0; i < mitad; i++){
-        String asientoIzquierda = asientos.get(i).toString();
-        String asientoDerecha = (i + mitad < capacidad) ? asientos.get(i + mitad).toString() : "";
-        modeloAsiento.addRow(new Object[]{asientoIzquierda, asientoDerecha});
-    }
-}
     private void cargarColectivos() {
         for (Colectivo item : colectivos) {
             JCBColectivo.addItem(item);
         }
     }
-    private void cargarRutas(){
+
+    private void cargarRutas() {
         for (Ruta item : rutas) {
             JCBRuta.addItem(item);
         }
     }
-    private void cargarFecha(){
+
+    private void cargarFecha() {
         JTFecha.setText(String.valueOf(LocalDate.now()));
         JTFecha.setEnabled(false);
     }
+
     private void borrarFilaTabla(DefaultTableModel modelo) {
         if (modelo != null) {
             int rowCount = modelo.getRowCount();
@@ -489,6 +544,15 @@ public class CompraPasaje extends javax.swing.JInternalFrame {
                 modelo.removeRow(i);
             }
         }
+    }
+
+    private void limpiar() {
+        JTDNIPasajero.setText("");
+        JTNombre.setText("");
+        JTApellido.setText("");
+        JTCorreo.setText("");
+        JTTelefono.setText("");
+        JTPrecio.setText("");
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton JBComprar;

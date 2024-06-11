@@ -118,6 +118,35 @@ public class ColectivoData {
         return colectivo;
 
     }
+    
+    
+     public Colectivo buscasColectivoPorCapacidad(String name) {
+        Colectivo colectivo = null;
+        String sql = "SELECT idColectivo, matricula, marca, modelo, capacidad, estado FROM colectivo WHERE matricula = ? AND estado = 1";
+        PreparedStatement ps = null;
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setString(1, name);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                colectivo = new Colectivo();
+                colectivo.setIdColectivo(rs.getInt("idColectivo"));
+                colectivo.setMatricula(rs.getString("matricula"));
+                colectivo.setMarca(rs.getString("marca"));
+                colectivo.setModelo(rs.getString("modelo"));
+                colectivo.setCapacidad(rs.getInt("capacidad"));
+                colectivo.setEstado(true);
+            } else {
+                JOptionPane.showMessageDialog(null, "No existe el colectivo");
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla colectivo " + ex.getMessage());
+        }
+        return colectivo;
+
+    }
+    
 
     public void eliminarColectivo(int id) {
         try {

@@ -40,8 +40,6 @@ public class CompraPasaje extends javax.swing.JInternalFrame {
     private DefaultTableModel modeloHorario;
     private DefaultTableModel modeloAsiento;
     private DefaultTableModel modeloPasaje;
-//    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-//    DateTimeFormatter formattertime = DateTimeFormatter.ofPattern("HH:mm");
 
     public CompraPasaje() {
         initComponents();
@@ -90,6 +88,7 @@ public class CompraPasaje extends javax.swing.JInternalFrame {
         JBComprar = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         JTPasaje = new javax.swing.JTable();
+        jBAnular = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(998, 450));
 
@@ -140,6 +139,11 @@ public class CompraPasaje extends javax.swing.JInternalFrame {
                 "Hora Salida", "Hora Llegada"
             }
         ));
+        JTHsSalidaYLlegada.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                JTHsSalidaYLlegadaMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(JTHsSalidaYLlegada);
 
         jLabel7.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
@@ -236,10 +240,17 @@ public class CompraPasaje extends javax.swing.JInternalFrame {
                 {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5", "Title 6", "Title 7", "Title 8"
+                "Pasaje", "Pasajero", "Colectivo", "Ruta", "Fecha", "HSalida", "HLlegada", "Estado"
             }
         ));
         jScrollPane3.setViewportView(JTPasaje);
+
+        jBAnular.setText("Anular Pasaje");
+        jBAnular.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBAnularActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -248,16 +259,6 @@ public class CompraPasaje extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(404, 404, 404)
-                                .addComponent(jLabel1))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(JBComprar)
-                                .addGap(342, 342, 342)
-                                .addComponent(btnSalir)))
-                        .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel11)
@@ -280,10 +281,6 @@ public class CompraPasaje extends javax.swing.JInternalFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel3)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -304,9 +301,23 @@ public class CompraPasaje extends javax.swing.JInternalFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(JTPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 539, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                            .addComponent(JTPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(404, 404, 404)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(JBComprar)
+                        .addGap(342, 342, 342)
+                        .addComponent(btnSalir)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jBAnular)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 486, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(53, 53, 53))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -365,7 +376,8 @@ public class CompraPasaje extends javax.swing.JInternalFrame {
                 .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnSalir)
-                    .addComponent(JBComprar))
+                    .addComponent(JBComprar)
+                    .addComponent(jBAnular))
                 .addGap(67, 67, 67))
         );
 
@@ -381,6 +393,7 @@ public class CompraPasaje extends javax.swing.JInternalFrame {
                 JTApellido.setText(pasajero.getApellido());
                 JTCorreo.setText(pasajero.getCorreo());
                 JTTelefono.setText(String.valueOf(pasajero.getTelefono()));
+                cargarPasajeDni();
             }
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "Debe ingresar un número válido");
@@ -411,7 +424,9 @@ public class CompraPasaje extends javax.swing.JInternalFrame {
         Ruta rutaSeleccionado = (Ruta) JCBRuta.getSelectedItem();
         if (rutaSeleccionado != null) {
             cargarHorarios(rutaSeleccionado);
+            cargarPasajeRuta();
         }
+        
     }//GEN-LAST:event_JCBRutaActionPerformed
 
     private void JTTelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTTelefonoActionPerformed
@@ -508,6 +523,22 @@ public class CompraPasaje extends javax.swing.JInternalFrame {
             cargarAsiento(colectivoSeleccionado);
         }
     }//GEN-LAST:event_JCBColectivoActionPerformed
+
+    private void jBAnularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAnularActionPerformed
+        int filaSeleccionada = JTPasaje.getSelectedRow();
+        if (filaSeleccionada != -1) {
+            int selectedRow = JTPasaje.getSelectedRow();
+            int selectedColumn = JTPasaje.getSelectedColumn();
+            String idPasajeAnular = String.valueOf(JTPasaje.getValueAt(selectedRow, selectedColumn));
+            pasajeData.anularPasaje(Integer.valueOf(idPasajeAnular));
+        }else{
+            JOptionPane.showMessageDialog(this,"Seleccione el ID del Pasaje de la tabla");
+        }
+    }//GEN-LAST:event_jBAnularActionPerformed
+
+    private void JTHsSalidaYLlegadaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTHsSalidaYLlegadaMouseClicked
+        cargarPasajeHorario();
+    }//GEN-LAST:event_JTHsSalidaYLlegadaMouseClicked
     private void cargarHorarios(Ruta ruta) {
         borrarFilaTabla(modeloHorario);
         List<Horario> horarios = horaData.buscarHorariosPorRuta(ruta);
@@ -539,6 +570,34 @@ public class CompraPasaje extends javax.swing.JInternalFrame {
         pasajes = pasajeData.historialVentas();
         for (Pasaje pasaje : pasajes) {
             modeloPasaje.addRow(new Object[]{pasaje.getIdPasaje(),pasaje.getIdPasajero().getIdPasajero(),pasaje.getIdColectivo().getIdColectivo(),pasaje.getIdRuta().getIdRuta(),pasaje.getFechaViaje(),pasaje.getHoraViaje(),pasaje.getAsiento(),pasaje.getPrecio()});
+        }
+    }
+    private void cargarPasajeDni(){
+        borrarFilaTabla(modeloPasaje);
+        Integer dni = Integer.parseInt(JTDNIPasajero.getText());
+        pasajero = pasajeroData.buscasPasajeroPorDni(dni);
+        List<Pasaje> pasajes = pasajeData.historialVentasXPasajero(pasajero);
+        for (Pasaje pasaje : pasajes) {
+            modeloPasaje.addRow(new Object[]{pasaje.getIdPasaje(),pasaje.getIdPasajero().getIdPasajero(),pasaje.getIdColectivo().getIdColectivo(),pasaje.getIdRuta().getIdRuta(),pasaje.getFechaViaje(),pasaje.getHoraViaje(),pasaje.getAsiento(),pasaje.getPrecio()});
+        }
+    }
+    private void cargarPasajeRuta(){
+        borrarFilaTabla(modeloPasaje);
+        Ruta ruta = (Ruta)JCBRuta.getSelectedItem();
+        List<Pasaje> pasajes = pasajeData.historialVentasXRuta(ruta.getIdRuta());
+        for (Pasaje pasaje : pasajes) {
+            modeloPasaje.addRow(new Object[]{pasaje.getIdPasaje(),pasaje.getIdPasajero().getIdPasajero(),pasaje.getIdColectivo().getIdColectivo(),pasaje.getIdRuta().getIdRuta(),pasaje.getFechaViaje(),pasaje.getHoraViaje(),pasaje.getAsiento(),pasaje.getPrecio()});
+        }
+    }
+    private void cargarPasajeHorario(){
+        borrarFilaTabla(modeloPasaje);
+        int filaSeleccionada = JTHsSalidaYLlegada.getSelectedRow();
+        if (filaSeleccionada != -1) {
+            LocalTime horario = (LocalTime) JTHsSalidaYLlegada.getValueAt(filaSeleccionada, 1);
+            List<Pasaje> pasajes = pasajeData.historialVentasXHorario(horario);
+            for (Pasaje pasaje : pasajes) {
+                modeloPasaje.addRow(new Object[]{pasaje.getIdPasaje(),pasaje.getIdPasajero().getIdPasajero(),pasaje.getIdColectivo().getIdColectivo(),pasaje.getIdRuta().getIdRuta(),pasaje.getFechaViaje(),pasaje.getHoraViaje(),pasaje.getAsiento(),pasaje.getPrecio()});
+            }
         }
     }
     private void cargarColectivos() {
@@ -591,6 +650,7 @@ public class CompraPasaje extends javax.swing.JInternalFrame {
     private javax.swing.JTextField JTTelefono;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnSalir;
+    private javax.swing.JButton jBAnular;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

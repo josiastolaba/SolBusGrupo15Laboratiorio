@@ -207,6 +207,7 @@ public class Menu extends javax.swing.JFrame {
 
     private void JMCargarRutaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMCargarRutaActionPerformed
         JDPEscritorio.removeAll();
+        System.out.println("Holaaaaaaa");
         JDPEscritorio.repaint();
         GestionRuta GRuta = new GestionRuta();
         GRuta.setVisible(true);

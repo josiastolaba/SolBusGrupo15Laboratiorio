@@ -240,7 +240,7 @@ public class CompraPasaje extends javax.swing.JInternalFrame {
                 {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Pasaje", "Pasajero", "Colectivo", "Ruta", "Fecha", "HSalida", "HLlegada", "Estado"
+                "Pasaje", "Pasajero", "Colectivo", "Ruta", "Fecha", "Hora", "Asiento", "Estado"
             }
         ));
         jScrollPane3.setViewportView(JTPasaje);

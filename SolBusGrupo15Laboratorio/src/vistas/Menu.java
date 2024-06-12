@@ -143,11 +143,24 @@ public class Menu extends javax.swing.JFrame {
         compraPasaje.setVisible(true);
         JDPEscritorio.add(compraPasaje);
         JDPEscritorio.moveToFront(compraPasaje);
+
+        // Obtener el tamaño del escritorio
         Dimension tamañoEscritorio = JDPEscritorio.getSize();
+
+        // Obtener el tamaño actual del formulario
         Dimension tamañoFormulario = compraPasaje.getSize();
-        int x = (tamañoEscritorio.width - tamañoFormulario.width) / 2;
+
+        // Ajustar el ancho del formulario al ancho del escritorio
+        tamañoFormulario.width = tamañoEscritorio.width;
+
+        // Ajustar el tamaño del formulario
+        compraPasaje.setSize(tamañoFormulario);
+
+        // Calcular la posición vertical para centrar el formulario
         int y = (tamañoEscritorio.height - tamañoFormulario.height) / 2;
-        compraPasaje.setLocation(x, y);
+
+        // Colocar el formulario con el nuevo tamaño y posición
+        compraPasaje.setLocation(0, y);
     }//GEN-LAST:event_JMCompraPasajeActionPerformed
 
     private void JMCargarPasajeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMCargarPasajeroActionPerformed

@@ -200,7 +200,7 @@ public class GestionColectivo extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarActionPerformed
-        // TODO add your handling code here:
+        
         try {
 
             if (jtMatricula.getText().length() != 0) {

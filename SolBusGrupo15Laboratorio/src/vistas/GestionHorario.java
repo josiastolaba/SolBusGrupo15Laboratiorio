@@ -1,4 +1,3 @@
-
 package vistas;
 
 import accesoDatos.HorarioData;
@@ -10,6 +9,7 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -19,21 +19,17 @@ import solbusgrupo15laboratorio.entidades.Horario;
 import solbusgrupo15laboratorio.entidades.Ruta;
 
 public class GestionHorario extends javax.swing.JInternalFrame {
-private RutaData rdata = new RutaData();
-private List<Ruta>rutas;
 
-private HorarioData hData = new HorarioData();
- private DefaultTableModel modelo;
- 
+    private RutaData rdata = new RutaData();
+    private List<Ruta> rutas;
 
-
-
+    private HorarioData hData = new HorarioData();
+    private DefaultTableModel modelo;
 
     public GestionHorario() {
         initComponents();
         cargarRuta();
-        modelo=(DefaultTableModel)jtListaDeHorarios.getModel();
-        
+        modelo = (DefaultTableModel) jtListaDeHorarios.getModel();
     }
 
     @SuppressWarnings("unchecked")
@@ -52,6 +48,7 @@ private HorarioData hData = new HorarioData();
         jcbRuta = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         jrEstado = new javax.swing.JRadioButton();
+        jBBorrar = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -105,6 +102,13 @@ private HorarioData hData = new HorarioData();
         jrEstado.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jrEstado.setText("Estado");
 
+        jBBorrar.setText("Borrar");
+        jBBorrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBBorrarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -113,6 +117,8 @@ private HorarioData hData = new HorarioData();
                 .addGap(38, 38, 38)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jBBorrar)
+                .addGap(18, 18, 18)
                 .addComponent(jbGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(61, 61, 61))
             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -148,9 +154,10 @@ private HorarioData hData = new HorarioData();
                 .addGap(31, 31, 31)
                 .addComponent(jrEstado)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton1)
-                    .addComponent(jbGuardar))
+                    .addComponent(jbGuardar)
+                    .addComponent(jBBorrar))
                 .addGap(15, 15, 15))
         );
 
@@ -261,31 +268,27 @@ private HorarioData hData = new HorarioData();
     }//GEN-LAST:event_jtHoraLlegadaActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-
-dispose();        // TODO add your handling code here:
+        dispose();
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
-         // TODO add your handling code here:
-     Ruta ruta =(Ruta)jcbRuta.getSelectedItem();
-        String hSalida=(String)jtHoraSalida.getText();
-        LocalTime salida=LocalTime.parse(hSalida);
-        
-        
-                
-        String hLlegada=(String)jtHoraLlegada.getText();
-        LocalTime llegada=LocalTime.parse(hLlegada);  
-        
-        Horario horario = new Horario(ruta,salida,llegada,jrEstado.isSelected());
-        
+        // TODO add your handling code here:
+        Ruta ruta = (Ruta) jcbRuta.getSelectedItem();
+        String hSalida = (String) jtHoraSalida.getText();
+        LocalTime salida = LocalTime.parse(hSalida);
+        String hLlegada = (String) jtHoraLlegada.getText();
+        LocalTime llegada = LocalTime.parse(hLlegada);
+
+        Horario horario = new Horario(ruta, salida, llegada, jrEstado.isSelected());
+
         hData.aniadirNuevoHorario(horario);
-        
+
     }//GEN-LAST:event_jbGuardarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-         borrarFilaTabla(modelo);
-         limpiar();
+        borrarFilaTabla(modelo);
+        limpiar();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jbBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarActionPerformed
@@ -294,14 +297,34 @@ dispose();        // TODO add your handling code here:
         cargarHorarioPorRuta();
 
     }//GEN-LAST:event_jbBuscarActionPerformed
-    public void limpiar (){
-        
-     
+
+    private void jBBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBorrarActionPerformed
+        try {
+            int selectedRow = jtListaDeHorarios.getSelectedRow();
+
+            if (selectedRow == -1) {
+                JOptionPane.showMessageDialog(null, "No se ha seleccionado ninguna fila.");
+                return;
+            }
+
+            Ruta ruta = (Ruta) jtListaDeHorarios.getValueAt(selectedRow, 0);
+            LocalTime hSalida = (LocalTime) jtListaDeHorarios.getValueAt(selectedRow, 1);
+            LocalTime hLlegada = (LocalTime) jtListaDeHorarios.getValueAt(selectedRow, 2);
+            Horario horario = new Horario(ruta, hSalida, hLlegada, true);
+            hData.modificarHorarioEstado(horario);
+        } catch (ClassCastException ex) {
+            JOptionPane.showMessageDialog(null, "Error de tipo de dato: " + ex.getMessage());
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage());
+        }
+    }//GEN-LAST:event_jBBorrarActionPerformed
+    public void limpiar() {
+
         jtHoraSalida.setText("");
         jtHoraLlegada.setText("");
         jrEstado.setSelected(false);
     }
-            
+
     private void borrarFilaTabla(DefaultTableModel modelo) {
         if (modelo != null) {
             int rowCount = modelo.getRowCount();
@@ -310,37 +333,33 @@ dispose();        // TODO add your handling code here:
             }
         }
     }
-    
-    
-    public void cargarHorarioPorRuta(){
-      borrarFilaTabla(modelo);
-      List<Horario> listaH=new ArrayList<>();
-      Ruta rut = (Ruta)jcbRuta.getSelectedItem();
-      listaH=hData.buscarHorariosPorRuta(rut);
-      
-      for(Horario aux:listaH){
-          modelo.addRow(new Object[]{aux.getIdRuta(),aux.getHoraSalida(),aux.getHoraLlegada(),aux.isEstado()});
-         
-      }
-      
-  }
-    public void  cargarRuta(){
-        
-        rutas=rdata.listarRutas();
-    
-        
-        
-        
-        
-        for (Ruta item :rutas) {
+
+    public void cargarHorarioPorRuta() {
+        borrarFilaTabla(modelo);
+        List<Horario> listaH = new ArrayList<>();
+        Ruta rut = (Ruta) jcbRuta.getSelectedItem();
+        listaH = hData.buscarHorariosPorRuta(rut);
+
+        for (Horario aux : listaH) {
+            modelo.addRow(new Object[]{aux.getIdRuta(), aux.getHoraSalida(), aux.getHoraLlegada(), aux.isEstado()});
+
+        }
+
+    }
+
+    public void cargarRuta() {
+
+        rutas = rdata.listarRutas();
+
+        for (Ruta item : rutas) {
             jcbRuta.addItem(item);
         }
-    
-}
 
-  
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jBBorrar;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;

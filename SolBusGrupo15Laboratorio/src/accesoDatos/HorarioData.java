@@ -1,4 +1,3 @@
-
 package accesoDatos;
 
 import java.sql.Connection;
@@ -19,11 +18,13 @@ import solbusgrupo15laboratorio.entidades.Pasajero;
 import solbusgrupo15laboratorio.entidades.Ruta;
 
 public class HorarioData {
+
     private Connection con = null;
 
     public HorarioData() {
         con = Conexion.getConexion();
     }
+
     public void aniadirNuevoHorario(Horario horario) {
         String sql = "INSERT INTO horario(`idRuta`, `horaSalida`, `horaLlegada`, `estado`)VALUES (?,?,?,?)";
         try {
@@ -43,12 +44,12 @@ public class HorarioData {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla horario" + ex.getMessage());
         }
     }
-    
-    public List<Horario> buscarHorariosPorRuta(Ruta ruta){
+
+    public List<Horario> buscarHorariosPorRuta(Ruta ruta) {
         List<Horario> horarios = new ArrayList<>();
         String sql = "SELECT horario.idRuta, horaSalida,horaLlegada, horario.estado "
-                +"FROM horario,ruta "
-                 +"       WHERE horario.idRuta = ?";
+                + "FROM horario,ruta "
+                + "       WHERE horario.idRuta = ?";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, ruta.getIdRuta());
@@ -72,11 +73,12 @@ public class HorarioData {
         }
         return horarios;
     }
+
     public List<Horario> buscarHorariosPorHDeSalida(LocalTime horario) {
         List<Horario> horarios = new ArrayList<>();
         String sql = "SELECT horario.idRuta, horaSalida,horaLlegada, horario.estado "
-                +"FROM horario "
-                 +"       WHERE horaSalida =?";
+                + "FROM horario "
+                + "       WHERE horaSalida =?";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setTime(1, Time.valueOf(horario));
@@ -97,7 +99,7 @@ public class HorarioData {
         }
         return horarios;
     }
-    
+
     public void modificarHorario(Horario horario) {
         String sql = "UPDATE horario SET idRuta = ? , horaSalida = ?, horaLlegada = ?,estado = ? WHERE estado = 1";
         PreparedStatement ps = null;
@@ -114,6 +116,26 @@ public class HorarioData {
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Horario " + ex.getMessage());
+        }
+    }
+
+    public void modificarHorarioEstado(Horario horario) {
+        String sql = "UPDATE horario SET estado = 0 WHERE idRuta = ? AND horaSalida = ? AND horaLlegada = ?";
+        PreparedStatement ps = null;
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, horario.getIdRuta().getIdRuta());
+            ps.setTime(2, Time.valueOf(horario.getHoraSalida()));
+            ps.setTime(3, Time.valueOf(horario.getHoraLlegada()));
+            int exito = ps.executeUpdate();
+            if (exito == 1) {
+                JOptionPane.showMessageDialog(null, "Modificado Exitosamente.");
+            } else {
+                JOptionPane.showMessageDialog(null, "El horario no existe");
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Horario: " + ex.getMessage());
         }
     }
 }

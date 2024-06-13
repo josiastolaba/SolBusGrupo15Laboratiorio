@@ -595,7 +595,7 @@ public class GestionPasajero extends javax.swing.JInternalFrame {
         boolean estado = jREstado.isSelected();
 
         if (pasajeroActual == null) {
-            pasajeroActual = new Pasajero(nombre, apellido, dni, nombre, telefono, estado);
+            pasajeroActual = new Pasajero(nombre, apellido, dni, email, telefono, estado);
             pasData.guardarPasajero(pasajeroActual);
         } else {
             pasajeroActual.setDni(dni);

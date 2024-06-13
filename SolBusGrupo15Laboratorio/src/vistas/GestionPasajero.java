@@ -60,6 +60,7 @@ public class GestionPasajero extends javax.swing.JInternalFrame {
         btnLimpiar2 = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
+        jBEliminar = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -164,6 +165,13 @@ public class GestionPasajero extends javax.swing.JInternalFrame {
         jLabel13.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel13.setText("Buscar pasajeros");
 
+        jBEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/eliminar.png"))); // NOI18N
+        jBEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBEliminarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -178,8 +186,9 @@ public class GestionPasajero extends javax.swing.JInternalFrame {
                             .addComponent(jLabel9)
                             .addComponent(jLabel10)
                             .addComponent(jLabel6)
-                            .addComponent(jLabel8))
-                        .addGap(29, 29, 29)
+                            .addComponent(jLabel8)
+                            .addComponent(jBEliminar))
+                        .addGap(28, 28, 28)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jREstado2)
                             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -227,9 +236,12 @@ public class GestionPasajero extends javax.swing.JInternalFrame {
                     .addComponent(jTTelefono2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
                 .addGap(18, 18, 18)
-                .addComponent(jREstado2)
-                .addGap(18, 18, 18)
-                .addComponent(btnLimpiar2)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jREstado2)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnLimpiar2))
+                    .addComponent(jBEliminar))
                 .addGap(73, 73, 73))
         );
 
@@ -306,14 +318,15 @@ public class GestionPasajero extends javax.swing.JInternalFrame {
                             .addComponent(jLabel11))
                         .addGap(28, 28, 28)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnNuevo)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jTNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
-                                .addComponent(jTApellido)
-                                .addComponent(jTDni)
-                                .addComponent(jTMail)
-                                .addComponent(jTTelefono))
-                            .addComponent(jREstado, javax.swing.GroupLayout.Alignment.LEADING))))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jTNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
+                                    .addComponent(jTApellido)
+                                    .addComponent(jTDni)
+                                    .addComponent(jTMail)
+                                    .addComponent(jTTelefono))
+                                .addComponent(jREstado, javax.swing.GroupLayout.Alignment.LEADING))
+                            .addComponent(btnNuevo))))
                 .addContainerGap(43, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -343,7 +356,7 @@ public class GestionPasajero extends javax.swing.JInternalFrame {
                     .addComponent(jTTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jREstado)
-                .addGap(18, 18, 18)
+                .addGap(21, 21, 21)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnNuevo)
                     .addComponent(btnLimpiar1))
@@ -450,7 +463,7 @@ public class GestionPasajero extends javax.swing.JInternalFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(btnLimpiarTabla)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jBSalir)
@@ -484,7 +497,7 @@ public class GestionPasajero extends javax.swing.JInternalFrame {
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 404, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -651,6 +664,16 @@ public class GestionPasajero extends javax.swing.JInternalFrame {
     private void btnLimpiarTablaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarTablaActionPerformed
         borrarFilaTabla(modelo);
     }//GEN-LAST:event_btnLimpiarTablaActionPerformed
+
+    private void jBEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBEliminarActionPerformed
+        if (pasajeroActual != null) {
+            pasData.eliminarPasajero(pasajeroActual.getDni());
+            pasajeroActual= null;
+            limpiarCampos();
+        }else{
+            JOptionPane.showMessageDialog(this, "No hay pasajero seleccionado");
+        }
+    }//GEN-LAST:event_jBEliminarActionPerformed
     private void borrarFilaTabla(DefaultTableModel modelo) {
         if (modelo != null) {
             int rowCount = modelo.getRowCount();
@@ -683,6 +706,7 @@ public class GestionPasajero extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnLimpiar2;
     private javax.swing.JButton btnLimpiarTabla;
     private javax.swing.JButton btnNuevo;
+    private javax.swing.JButton jBEliminar;
     private javax.swing.JButton jBLista;
     private javax.swing.JButton jBSalir;
     private javax.swing.JLabel jLabel1;

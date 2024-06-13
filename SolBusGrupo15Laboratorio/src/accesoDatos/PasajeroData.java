@@ -166,4 +166,28 @@ public class PasajeroData {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Alumno " + ex.getMessage());
         }
     }
+    public void eliminarPasajero(String dni) {
+    
+    
+    try {
+        String sql = "UPDATE pasajero SET estado = 0 WHERE dni = ? ";
+        PreparedStatement ps = con.prepareStatement(sql);
+        
+        ps.setString(1, dni);
+        
+        int fila = ps.executeUpdate();
+
+        if (fila == 1) {
+            JOptionPane.showMessageDialog(null, "Se eliminó el pasajero.");
+        } else {
+            
+            JOptionPane.showMessageDialog(null, "No se encontró el pasajero " );
+        }
+        
+        ps.close();
+    } catch (SQLException e) {
+        // Aquí deberías mostrar el mensaje de error específico de la excepción.
+        JOptionPane.showMessageDialog(null, "Error al eliminar el pasajero: " + e.getMessage());
+    }
+}
 }

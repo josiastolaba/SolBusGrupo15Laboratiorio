@@ -64,7 +64,34 @@ public class ColectivoData {
         }
         return colectivos;
     }
+    
+    public Colectivo buscarColectivo(int id) {
+        Colectivo colectivo = null;
+        String sql = "SELECT idColectivo, matricula, marca, modelo, capacidad, estado FROM colectivo WHERE idColectivo = ? AND estado = 1";
+        PreparedStatement ps = null;
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                colectivo = new Colectivo();
+                colectivo.setIdColectivo(rs.getInt("idColectivo"));
+                colectivo.setMatricula(rs.getString("matricula"));
+                colectivo.setMarca(rs.getString("marca"));
+                colectivo.setModelo(rs.getString("modelo"));
+                colectivo.setCapacidad(rs.getInt("capacidad"));
+                colectivo.setEstado(true);
+            } else {
+                JOptionPane.showMessageDialog(null, "No existe el colectivo");
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla colectivo " + ex.getMessage());
+        }
+        return colectivo;
 
+    }
+    
     public Colectivo buscasColectivoPorMarca(String name) {
         Colectivo colectivo = null;
         String sql = "SELECT idColectivo, matricula, marca, modelo, capacidad, estado FROM colectivo WHERE marca = ? AND estado = 1";
@@ -146,8 +173,8 @@ public class ColectivoData {
         return colectivo;
 
     }
-    
 
+     
     public void eliminarColectivo(int id) {
         try {
             String sql = "UPDATE colectivo SET estado = 0 WHERE idColectivo = ? ";
@@ -163,5 +190,21 @@ public class ColectivoData {
             JOptionPane.showMessageDialog(null, " Error al acceder a la tabla Colectivo");
         }
     }
-
+    
+    public int controlCapacidad(int id) {
+        String sql = "SELECT COUNT(*) FROM pasaje WHERE idColectivo = ?";
+        int totalVendido = 0;
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                totalVendido = rs.getInt(1);
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla pasaje: " + ex.getMessage());
+        }
+        return totalVendido;
+    }
 }

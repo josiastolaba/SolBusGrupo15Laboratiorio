@@ -590,10 +590,19 @@ public class CompraPasaje extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(this, "Debe seleccionar un asiento válido.");
                 return;
             }
-
-            Pasaje pasaje = new Pasaje(pas, col, rut, fech, lc, Integer.parseInt(asienselec), precio);
-            pasajeData.venderPasaje(pasaje);
-            pasajeData.emitirRecibo(pasaje.getIdPasaje());
+            
+            Colectivo colectivo = coleData.buscarColectivo(col.getIdColectivo());
+            if(coleData.controlCapacidad(col.getIdColectivo())<=colectivo.getCapacidad()){
+                System.out.println(colectivo.getCapacidad());
+                System.out.println(colectivo.toString());
+                System.out.println(coleData.controlCapacidad(col.getIdColectivo()));
+                Pasaje pasaje = new Pasaje(pas, col, rut, fech, lc, Integer.parseInt(asienselec), precio);
+                pasajeData.venderPasaje(pasaje);
+                pasajeData.emitirRecibo(pasaje.getIdPasaje());
+            }else{
+                JOptionPane.showMessageDialog(this, "No hay mas pasajes para este colectivo");
+            }
+            
 
             borrarFilaTabla(modeloHorario);
             borrarFilaTabla(modeloAsiento);

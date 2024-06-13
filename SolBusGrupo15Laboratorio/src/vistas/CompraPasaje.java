@@ -593,9 +593,6 @@ public class CompraPasaje extends javax.swing.JInternalFrame {
             
             Colectivo colectivo = coleData.buscarColectivo(col.getIdColectivo());
             if(coleData.controlCapacidad(col.getIdColectivo())<=colectivo.getCapacidad()){
-                System.out.println(colectivo.getCapacidad());
-                System.out.println(colectivo.toString());
-                System.out.println(coleData.controlCapacidad(col.getIdColectivo()));
                 Pasaje pasaje = new Pasaje(pas, col, rut, fech, lc, Integer.parseInt(asienselec), precio);
                 pasajeData.venderPasaje(pasaje);
                 pasajeData.emitirRecibo(pasaje.getIdPasaje());

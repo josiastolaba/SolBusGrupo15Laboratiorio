@@ -81,6 +81,11 @@ private HorarioData hData = new HorarioData();
         jLabel7.setText("Hora Llegada");
 
         jButton1.setText("Nuevo");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jbGuardar.setText("Guadar");
         jbGuardar.addActionListener(new java.awt.event.ActionListener() {
@@ -260,7 +265,8 @@ private HorarioData hData = new HorarioData();
     }//GEN-LAST:event_jtHoraLlegadaActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
+
+dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
@@ -282,11 +288,36 @@ private HorarioData hData = new HorarioData();
 
     private void jbBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarActionPerformed
         // TODO add your handling code here:
+        borrarFilaTabla(modelo);
         cargarHorarioPorRuta();
         
         
     }//GEN-LAST:event_jbBuscarActionPerformed
-  public void cargarHorarioPorRuta(){
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+         borrarFilaTabla(modelo);
+         limpiar();
+    }//GEN-LAST:event_jButton1ActionPerformed
+    public void limpiar (){
+        
+     
+        jtHoraSalida.setText("");
+        jtHoraLlegada.setText("");
+        jrEstado.setSelected(false);
+    }
+            
+    private void borrarFilaTabla(DefaultTableModel modelo) {
+        if (modelo != null) {
+            int rowCount = modelo.getRowCount();
+            for (int i = rowCount - 1; i >= 0; i--) {
+                modelo.removeRow(i);
+            }
+        }
+    }
+    
+    
+    public void cargarHorarioPorRuta(){
       
       List<Horario> listaH=new ArrayList<>();
       Ruta ruta = (Ruta)jcbRuta.getSelectedItem();

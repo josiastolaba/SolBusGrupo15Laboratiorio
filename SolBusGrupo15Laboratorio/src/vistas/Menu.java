@@ -19,7 +19,7 @@ public class Menu extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        ImageIcon icono=new ImageIcon(getClass().getResource("/imagenes/sol-min.jpg"));
+        ImageIcon icono=new ImageIcon(getClass().getResource("/imagenes/solBus.jpg"));
         Image image=icono.getImage();
         JDPEscritorio = new javax.swing.JDesktopPane(){
             public void paintComponent(Graphics g){

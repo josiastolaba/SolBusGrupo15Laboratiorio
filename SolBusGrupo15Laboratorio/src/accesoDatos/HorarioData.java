@@ -129,7 +129,7 @@ public class HorarioData {
             ps.setTime(3, Time.valueOf(horario.getHoraLlegada()));
             int exito = ps.executeUpdate();
             if (exito == 1) {
-                JOptionPane.showMessageDialog(null, "Modificado Exitosamente.");
+                JOptionPane.showMessageDialog(null, "Horario Eliminado");
             } else {
                 JOptionPane.showMessageDialog(null, "El horario no existe");
             }

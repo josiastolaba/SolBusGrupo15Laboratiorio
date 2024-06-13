@@ -57,8 +57,8 @@ public class GestionRuta extends javax.swing.JInternalFrame {
         jTOrigen = new javax.swing.JTextField();
         jTDestino = new javax.swing.JTextField();
         jREstado = new javax.swing.JRadioButton();
-        jCHora = new javax.swing.JComboBox<>();
-        jCMinutos = new javax.swing.JComboBox<>();
+        jCHora = new javax.swing.JComboBox<Integer>();
+        jCMinutos = new javax.swing.JComboBox<Integer>();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
@@ -77,6 +77,7 @@ public class GestionRuta extends javax.swing.JInternalFrame {
         jTListaRutas = new javax.swing.JTable();
         jLabel10 = new javax.swing.JLabel();
         jBSalir = new javax.swing.JButton();
+        jBBorrar = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel1.setText("Control de Rutas");
@@ -289,10 +290,10 @@ public class GestionRuta extends javax.swing.JInternalFrame {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jTDestino2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel9)))
-                    .addComponent(jBBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jBBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel5)
@@ -378,6 +379,13 @@ public class GestionRuta extends javax.swing.JInternalFrame {
             }
         });
 
+        jBBorrar.setText("Borrar");
+        jBBorrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBBorrarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -396,6 +404,8 @@ public class GestionRuta extends javax.swing.JInternalFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addGap(378, 378, 378)
                                 .addComponent(jBLimpiar2)
+                                .addGap(18, 18, 18)
+                                .addComponent(jBBorrar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jBSalir))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
@@ -428,7 +438,8 @@ public class GestionRuta extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jBLimpiar2)
-                            .addComponent(jBSalir))))
+                            .addComponent(jBSalir)
+                            .addComponent(jBBorrar))))
                 .addContainerGap(11, Short.MAX_VALUE))
         );
 
@@ -564,6 +575,24 @@ public class GestionRuta extends javax.swing.JInternalFrame {
             modelo.addRow(new Object[]{ruta.getIdRuta(), ruta.getOrigen(), ruta.getDestino(), ruta.getDuracion(), ruta.isEstado()});
         }
     }//GEN-LAST:event_jBListarRutasActionPerformed
+
+    private void jBBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBorrarActionPerformed
+        try {
+            int selectedRow = jTListaRutas.getSelectedRow();
+            if (selectedRow == -1) {
+                JOptionPane.showMessageDialog(null, "No se ha seleccionado ninguna fila.");
+                return;
+            }
+            int id = (Integer)jTListaRutas.getValueAt(selectedRow, 0);
+            String origen = (String) jTListaRutas.getValueAt(selectedRow, 1);
+            String destino = (String) jTListaRutas.getValueAt(selectedRow, 2);
+            LocalTime dura = (LocalTime) jTListaRutas.getValueAt(selectedRow, 3);
+            Ruta ruta = new Ruta(id, origen, destino,dura, true);
+            rData.eliminarRuta(ruta);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage());
+        }
+    }//GEN-LAST:event_jBBorrarActionPerformed
     private void borrarFilaTabla(DefaultTableModel modelo) {
         if (modelo != null) {
             int rowCount = modelo.getRowCount();
@@ -589,6 +618,7 @@ public class GestionRuta extends javax.swing.JInternalFrame {
 
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jBBorrar;
     private javax.swing.JButton jBBuscar;
     private javax.swing.JButton jBLimpiar;
     private javax.swing.JButton jBLimpiar2;

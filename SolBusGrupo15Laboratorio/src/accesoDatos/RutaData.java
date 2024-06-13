@@ -131,4 +131,24 @@ public class RutaData {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla ruta " + ex.getMessage());
         }
     }
+    
+    public void eliminarRuta(Ruta ruta) {
+    String sql = "UPDATE ruta SET estado = 0 WHERE idRuta = ?";
+    PreparedStatement ps = null;
+    try {
+        ps = con.prepareStatement(sql);
+        ps.setInt(1, ruta.getIdRuta());
+        
+        int exito = ps.executeUpdate();
+
+        if (exito == 1) {
+            JOptionPane.showMessageDialog(null, "Ruta Eliminada");
+        } else {
+            JOptionPane.showMessageDialog(null, "La ruta no existe");
+        }
+
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(null, "Error al acceder a la tabla ruta: " + ex.getMessage());
+    }
+}
 }

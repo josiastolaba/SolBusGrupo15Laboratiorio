@@ -3,6 +3,7 @@ package vistas;
 import accesoDatos.HorarioData;
 import accesoDatos.RutaData;
 import java.time.LocalTime;
+import java.time.format.DateTimeParseException;
 import static java.time.temporal.TemporalQueries.localTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,13 +49,13 @@ public class GestionHorario extends javax.swing.JInternalFrame {
         jcbRuta = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         jrEstado = new javax.swing.JRadioButton();
-        jBBorrar = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jtListaDeHorarios = new javax.swing.JTable();
         jButton5 = new javax.swing.JButton();
         jbBuscar = new javax.swing.JButton();
+        jBBorrar = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel1.setText("Horario");
@@ -102,13 +103,6 @@ public class GestionHorario extends javax.swing.JInternalFrame {
         jrEstado.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jrEstado.setText("Estado");
 
-        jBBorrar.setText("Borrar");
-        jBBorrar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBBorrarActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -117,8 +111,6 @@ public class GestionHorario extends javax.swing.JInternalFrame {
                 .addGap(38, 38, 38)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jBBorrar)
-                .addGap(18, 18, 18)
                 .addComponent(jbGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(61, 61, 61))
             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -156,8 +148,7 @@ public class GestionHorario extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton1)
-                    .addComponent(jbGuardar)
-                    .addComponent(jBBorrar))
+                    .addComponent(jbGuardar))
                 .addGap(15, 15, 15))
         );
 
@@ -194,6 +185,13 @@ public class GestionHorario extends javax.swing.JInternalFrame {
             }
         });
 
+        jBBorrar.setText("Borrar");
+        jBBorrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBBorrarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -203,6 +201,8 @@ public class GestionHorario extends javax.swing.JInternalFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jbBuscar)
+                        .addGap(18, 18, 18)
+                        .addComponent(jBBorrar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton5))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 634, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -214,9 +214,11 @@ public class GestionHorario extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jButton5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jbBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(jBBorrar))
                 .addGap(15, 15, 15))
         );
 
@@ -272,27 +274,59 @@ public class GestionHorario extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
-        // TODO add your handling code here:
+        try {
         Ruta ruta = (Ruta) jcbRuta.getSelectedItem();
-        String hSalida = (String) jtHoraSalida.getText();
-        LocalTime salida = LocalTime.parse(hSalida);
-        String hLlegada = (String) jtHoraLlegada.getText();
-        LocalTime llegada = LocalTime.parse(hLlegada);
+        if (ruta == null) {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar una ruta.");
+            return;
+        }
+        String hSalida = jtHoraSalida.getText();
+        if (hSalida.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "La hora de salida no puede estar vacía.");
+            return;
+        }
+        LocalTime salida;
+        try {
+            salida = LocalTime.parse(hSalida);
+        } catch (DateTimeParseException e) {
+            JOptionPane.showMessageDialog(null, "La hora de salida debe tener el formato HH:mm.");
+            return;
+        }
+        String hLlegada = jtHoraLlegada.getText();
+        if (hLlegada.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "La hora de llegada no puede estar vacía.");
+            return;
+        }
+        LocalTime llegada;
+        try {
+            llegada = LocalTime.parse(hLlegada);
+        } catch (DateTimeParseException e) {
+            JOptionPane.showMessageDialog(null, "La hora de llegada debe tener el formato HH:mm.");
+            return;
+        }
+        if (!llegada.isAfter(salida)) {
+            JOptionPane.showMessageDialog(null, "La hora de llegada debe ser posterior a la hora de salida.");
+            return;
+        }
+        boolean estado = jrEstado.isSelected();
 
-        Horario horario = new Horario(ruta, salida, llegada, jrEstado.isSelected());
-
+        Horario horario = new Horario(ruta, salida, llegada, estado);
         hData.aniadirNuevoHorario(horario);
+        JOptionPane.showMessageDialog(null, "Horario añadido exitosamente.");
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(null, "Error al añadir el horario: " + ex.getMessage());
+    }
 
     }//GEN-LAST:event_jbGuardarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        
         borrarFilaTabla(modelo);
         limpiar();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jbBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarActionPerformed
-        // TODO add your handling code here:
+        
         borrarFilaTabla(modelo);
         cargarHorarioPorRuta();
 
@@ -312,8 +346,6 @@ public class GestionHorario extends javax.swing.JInternalFrame {
             LocalTime hLlegada = (LocalTime) jtListaDeHorarios.getValueAt(selectedRow, 2);
             Horario horario = new Horario(ruta, hSalida, hLlegada, true);
             hData.modificarHorarioEstado(horario);
-        } catch (ClassCastException ex) {
-            JOptionPane.showMessageDialog(null, "Error de tipo de dato: " + ex.getMessage());
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage());
         }

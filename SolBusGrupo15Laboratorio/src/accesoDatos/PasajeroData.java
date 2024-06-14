@@ -19,24 +19,38 @@ public class PasajeroData {
     }
 
     public void guardarPasajero(Pasajero pasajero) {
-        String sql = "INSERT INTO pasajero( nombre, apellido, dni, correo, telefono, estado) VALUES (?, ?, ?, ?, ?, ?)";
+        String sqlBuscar = "SELECT * FROM pasajero WHERE dni = ?";
+        String sqlInsertar = "INSERT INTO pasajero(nombre, apellido, dni, correo, telefono, estado) VALUES (?, ?, ?, ?, ?, ?)";
+
         try {
-            PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, pasajero.getNombre());
-            ps.setString(2, pasajero.getApellido());
-            ps.setString(3, pasajero.getDni());
-            ps.setString(4, pasajero.getCorreo());
-            ps.setString(5, pasajero.getTelefono());
-            ps.setBoolean(6, pasajero.isEstado());
-            ps.executeUpdate();
-            ResultSet rs = ps.getGeneratedKeys();
-            if (rs.next()) {
-                pasajero.setIdPasajero(rs.getInt(1));;
-                JOptionPane.showMessageDialog(null, "Pasajero añadido con exito.");
-            }
             
+            PreparedStatement psBuscar = con.prepareStatement(sqlBuscar);
+            psBuscar.setString(1, pasajero.getDni());
+            ResultSet rs = psBuscar.executeQuery();
+
+            if (rs.next()) {
+                
+                JOptionPane.showMessageDialog(null, "El DNI ingresado ya existe. No se puede agregar el pasajero.");
+            } else {
+               
+                PreparedStatement psInsertar = con.prepareStatement(sqlInsertar, Statement.RETURN_GENERATED_KEYS);
+                psInsertar.setString(1, pasajero.getNombre());
+                psInsertar.setString(2, pasajero.getApellido());
+                psInsertar.setString(3, pasajero.getDni());
+                psInsertar.setString(4, pasajero.getCorreo());
+                psInsertar.setString(5, pasajero.getTelefono());
+                psInsertar.setBoolean(6, pasajero.isEstado());
+
+                psInsertar.executeUpdate();
+                ResultSet rsInsertar = psInsertar.getGeneratedKeys();
+
+                if (rsInsertar.next()) {
+                    pasajero.setIdPasajero(rsInsertar.getInt(1));
+                    JOptionPane.showMessageDialog(null, "Pasajero añadido con éxito.");
+                }
+            }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Pasajero" + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Pasajero: " + ex.getMessage());
         }
     }
 
@@ -63,8 +77,8 @@ public class PasajeroData {
         }
         return pasajeros;
     }
-    
-    public Pasajero buscasPasajeroPorNombre(String name){
+
+    public Pasajero buscasPasajeroPorNombre(String name) {
         Pasajero pasajero = null;
         String sql = "SELECT idPasajero, nombre, apellido, dni, correo, telefono, estado FROM pasajero WHERE nombre= ? AND estado = 1";
         PreparedStatement ps = null;
@@ -90,7 +104,8 @@ public class PasajeroData {
         }
         return pasajero;
     }
-    public Pasajero buscasPasajeroPorApellido(String lastname){
+
+    public Pasajero buscasPasajeroPorApellido(String lastname) {
         Pasajero pasajero = null;
         String sql = "SELECT idPasajero, nombre, apellido, dni, correo, telefono, estado FROM pasajero WHERE apellido = ? AND estado = 1";
         PreparedStatement ps = null;
@@ -116,7 +131,8 @@ public class PasajeroData {
         }
         return pasajero;
     }
-    public Pasajero buscasPasajeroPorDni(int dni){
+
+    public Pasajero buscasPasajeroPorDni(int dni) {
         Pasajero pasajero = null;
         String sql = "SELECT idPasajero, nombre, apellido, dni, correo, telefono, estado FROM pasajero WHERE dni = ? AND estado = 1";
         PreparedStatement ps = null;
@@ -143,13 +159,14 @@ public class PasajeroData {
         }
         return pasajero;
     }
+
     public void modificarPasajero(Pasajero pasajero) {
         String sql = "UPDATE pasajero SET dni = ? , nombre = ?, apellido = ?, email = ?, telefono=? WHERE idPasajero = ?";
         PreparedStatement ps = null;
         try {
             ps = con.prepareStatement(sql);
             ps.setString(1, pasajero.getDni());
-            
+
             ps.setString(2, pasajero.getNombre());
             ps.setString(3, pasajero.getApellido());
             ps.setString(4, pasajero.getCorreo());
@@ -166,28 +183,28 @@ public class PasajeroData {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Alumno " + ex.getMessage());
         }
     }
-    public void eliminarPasajero(String dni) {
-    
-    
-    try {
-        String sql = "UPDATE pasajero SET estado = 0 WHERE dni = ? ";
-        PreparedStatement ps = con.prepareStatement(sql);
-        
-        ps.setString(1, dni);
-        
-        int fila = ps.executeUpdate();
 
-        if (fila == 1) {
-            JOptionPane.showMessageDialog(null, "Se eliminó el pasajero.");
-        } else {
-            
-            JOptionPane.showMessageDialog(null, "No se encontró el pasajero " );
+    public void eliminarPasajero(String dni) {
+
+        try {
+            String sql = "UPDATE pasajero SET estado = 0 WHERE dni = ? ";
+            PreparedStatement ps = con.prepareStatement(sql);
+
+            ps.setString(1, dni);
+
+            int fila = ps.executeUpdate();
+
+            if (fila == 1) {
+                JOptionPane.showMessageDialog(null, "Se eliminó el pasajero.");
+            } else {
+
+                JOptionPane.showMessageDialog(null, "No se encontró el pasajero ");
+            }
+
+            ps.close();
+        } catch (SQLException e) {
+            // Aquí deberías mostrar el mensaje de error específico de la excepción.
+            JOptionPane.showMessageDialog(null, "Error al eliminar el pasajero: " + e.getMessage());
         }
-        
-        ps.close();
-    } catch (SQLException e) {
-        // Aquí deberías mostrar el mensaje de error específico de la excepción.
-        JOptionPane.showMessageDialog(null, "Error al eliminar el pasajero: " + e.getMessage());
     }
-}
 }
